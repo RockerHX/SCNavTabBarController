@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  SCNavTabbarDemo
+//  SCNavTabBarControllerDemo
 //
 //  Created by ShiCang on 14/11/17.
-//  Copyright (c) 2014年 SCNavTabbarDemo. All rights reserved.
+//  Copyright (c) 2014年 SCNavTabBarControllerDemo. All rights reserved.
 //
 
 #import "AppDelegate.h"

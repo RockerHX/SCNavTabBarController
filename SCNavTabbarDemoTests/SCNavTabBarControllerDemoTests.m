@@ -1,19 +1,19 @@
 //
-//  SCNavTabbarDemoTests.m
-//  SCNavTabbarDemoTests
+//  SCNavTabBarControllerDemoTests.m
+//  SCNavTabBarControllerDemo
 //
-//  Created by ShiCang on 14/11/17.
+//  Created by ShiCang on 14/11/20.
 //  Copyright (c) 2014年 SCNavTabbarDemo. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface SCNavTabbarDemoTests : XCTestCase
+@interface SCNavTabBarControllerDemoTests : XCTestCase
 
 @end
 
-@implementation SCNavTabbarDemoTests
+@implementation SCNavTabBarControllerDemoTests
 
 - (void)setUp {
     [super setUp];

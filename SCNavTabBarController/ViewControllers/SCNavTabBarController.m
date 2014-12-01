@@ -26,12 +26,12 @@
 #pragma mark - Life Cycle
 #pragma mark -
 
-- (id)initWithShowArrowButton:(BOOL)show
+- (id)initWithCanPopAllItemMenu:(BOOL)can
 {
     self = [super init];
     if (self)
     {
-        _showArrowButton = show;
+        _canPopAllItemMenu = can;
     }
     return self;
 }
@@ -56,11 +56,11 @@
     return self;
 }
 
-- (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController showArrowButton:(BOOL)show;
+- (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController canPopAllItemMenu:(BOOL)can;
 {
     self = [self initWithSubViewControllers:subControllers];
     
-    _showArrowButton = show;
+    _canPopAllItemMenu = can;
     [self addParentController:viewController];
     return self;
 }
@@ -99,7 +99,7 @@
 - (void)viewInit
 {
     // Load NavTabBar and content view to show on window
-    _navTabBar = [[SCNavTabBar alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, NAV_TAB_BAR_HEIGHT) showArrowButton:_showArrowButton];
+    _navTabBar = [[SCNavTabBar alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, NAV_TAB_BAR_HEIGHT) canPopAllItemMenu:_canPopAllItemMenu];
     _navTabBar.delegate = self;
     _navTabBar.backgroundColor = _navTabBarColor;
     _navTabBar.lineColor = _navTabBarLineColor;
