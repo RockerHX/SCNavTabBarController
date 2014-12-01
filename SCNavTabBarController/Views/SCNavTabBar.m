@@ -20,7 +20,7 @@
     
     NSMutableArray  *_items;                // SCNavTabBar pressed item
     NSArray         *_itemsWidth;           // an array of items' width
-    BOOL            _showArrowButton;       // is showed arrow button
+    BOOL            _canPopAllItemMenu;     // is showed arrow button
     BOOL            _popItemMenu;           // is needed pop item menu
 }
 
@@ -28,12 +28,12 @@
 
 @implementation SCNavTabBar
 
-- (id)initWithFrame:(CGRect)frame showArrowButton:(BOOL)show
+- (id)initWithFrame:(CGRect)frame canPopAllItemMenu:(BOOL)can
 {
     self = [super initWithFrame:frame];
     if (self)
     {
-        _showArrowButton = show;
+        _canPopAllItemMenu = can;
         [self initConfig];
     }
     return self;
@@ -53,8 +53,8 @@
 
 - (void)viewConfig
 {
-    CGFloat functionButtonX = _showArrowButton ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
-    if (_showArrowButton)
+    CGFloat functionButtonX = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
+    if (_canPopAllItemMenu)
     {
         _arrowButton = [[UIImageView alloc] initWithFrame:CGRectMake(functionButtonX, DOT_COORDINATE, ARROW_BUTTON_WIDTH, ARROW_BUTTON_WIDTH)];
         _arrowButton.layer.shadowColor = [UIColor lightGrayColor].CGColor;
@@ -212,7 +212,7 @@
 {
     _currentItemIndex = currentItemIndex;
     UIButton *button = _items[currentItemIndex];
-    CGFloat flag = _showArrowButton ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
+    CGFloat flag = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
     
     if (button.frame.origin.x + button.frame.size.width > flag)
     {

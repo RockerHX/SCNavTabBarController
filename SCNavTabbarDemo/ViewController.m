@@ -1,9 +1,9 @@
 //
 //  ViewController.m
-//  SCNavTabbarDemo
+//  SCNavTabBarControllerDemo
 //
 //  Created by ShiCang on 14/11/17.
-//  Copyright (c) 2014年 SCNavTabbarDemo. All rights reserved.
+//  Copyright (c) 2014年 SCNavTabBarControllerDemo. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -57,7 +57,7 @@
     
     SCNavTabBarController *navTabBarController = [[SCNavTabBarController alloc] init];
     navTabBarController.subViewControllers = @[oneViewController, twoViewController, threeViewController, fourViewController, fiveViewController, sixViewController, sevenViewController, eightViewController, ninghtViewController];
-    navTabBarController.showArrowButton = YES;
+    navTabBarController.canPopAllItemMenu = YES;
     [navTabBarController addParentController:self];
 }
 

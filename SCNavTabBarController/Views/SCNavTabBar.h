@@ -46,7 +46,7 @@
  *
  *  @return Instance
  */
-- (id)initWithFrame:(CGRect)frame showArrowButton:(BOOL)show;
+- (id)initWithFrame:(CGRect)frame canPopAllItemMenu:(BOOL)can;
 
 /**
  *  Update Item Data

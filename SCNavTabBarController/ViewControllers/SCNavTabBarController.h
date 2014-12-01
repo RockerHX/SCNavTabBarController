@@ -12,7 +12,7 @@
 
 @interface SCNavTabBarController : UIViewController
 
-@property (nonatomic, assign)   BOOL        showArrowButton;            // Default value: YES
+@property (nonatomic, assign)   BOOL        canPopAllItemMenu;          // Default value: YES
 @property (nonatomic, assign)   BOOL        scrollAnimation;            // Default value: NO
 @property (nonatomic, assign)   BOOL        mainViewBounces;            // Default value: NO
 
@@ -25,11 +25,11 @@
 /**
  *  Initialize Methods
  *
- *  @param show - is show the arrow button
+ *  @param show - can pop all item menu
  *
  *  @return Instance
  */
-- (id)initWithShowArrowButton:(BOOL)show;
+- (id)initWithCanPopAllItemMenu:(BOOL)can;
 
 /**
  *  Initialize SCNavTabBarViewController Instance And Show Children View Controllers
@@ -54,11 +54,11 @@
  *
  *  @param subControllers - set an array of children view controllers
  *  @param viewController - set parent view controller
- *  @param show           - is show the arrow button
+ *  @param can            - can pop all item menu
  *
  *  @return Instance
  */
-- (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController showArrowButton:(BOOL)show;
+- (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController canPopAllItemMenu:(BOOL)can;
 
 /**
  *  Show On The Parent View Controller

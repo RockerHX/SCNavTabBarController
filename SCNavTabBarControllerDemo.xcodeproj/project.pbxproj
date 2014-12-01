@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481EFB661A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 481EFB651A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m */; };
 		4841AF451A1A2941001308F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF441A1A2941001308F7 /* main.m */; };
 		4841AF481A1A2941001308F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF471A1A2941001308F7 /* AppDelegate.m */; };
 		4841AF4B1A1A2941001308F7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF4A1A1A2941001308F7 /* ViewController.m */; };
 		4841AF4E1A1A2941001308F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4841AF4C1A1A2941001308F7 /* Main.storyboard */; };
 		4841AF501A1A2941001308F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4841AF4F1A1A2941001308F7 /* Images.xcassets */; };
 		4841AF531A1A2941001308F7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4841AF511A1A2941001308F7 /* LaunchScreen.xib */; };
-		4841AF5F1A1A2942001308F7 /* SCNavTabbarDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF5E1A1A2942001308F7 /* SCNavTabbarDemoTests.m */; };
 		48D07A211A1BEA5400425406 /* SCNavTabBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48D07A181A1BEA5400425406 /* SCNavTabBar.bundle */; };
 		48D07A221A1BEA5400425406 /* SCNavTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D07A1B1A1BEA5400425406 /* SCNavTabBarController.m */; };
 		48D07A231A1BEA5400425406 /* SCNavTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D07A1E1A1BEA5400425406 /* SCNavTabBar.m */; };
@@ -31,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		481EFB651A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNavTabBarControllerDemoTests.m; sourceTree = "<group>"; };
 		4841AF3F1A1A2941001308F7 /* SCNavTabbarDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCNavTabbarDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4841AF431A1A2941001308F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4841AF441A1A2941001308F7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		4841AF521A1A2941001308F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4841AF581A1A2942001308F7 /* SCNavTabbarDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCNavTabbarDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4841AF5D1A1A2942001308F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4841AF5E1A1A2942001308F7 /* SCNavTabbarDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNavTabbarDemoTests.m; sourceTree = "<group>"; };
 		48D07A171A1BEA5400425406 /* CommonMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMacro.h; sourceTree = "<group>"; };
 		48D07A181A1BEA5400425406 /* SCNavTabBar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SCNavTabBar.bundle; sourceTree = "<group>"; };
 		48D07A1A1A1BEA5400425406 /* SCNavTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNavTabBarController.h; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				4841AF411A1A2941001308F7 /* SCNavTabBarControllerDemo */,
-				4841AF5B1A1A2942001308F7 /* SCNavTabbarDemoTests */,
+				4841AF5B1A1A2942001308F7 /* SCNavTabBarControllerDemoTests */,
 				4841AF401A1A2941001308F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,12 +116,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4841AF5B1A1A2942001308F7 /* SCNavTabbarDemoTests */ = {
+		4841AF5B1A1A2942001308F7 /* SCNavTabBarControllerDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				4841AF5E1A1A2942001308F7 /* SCNavTabbarDemoTests.m */,
 				4841AF5C1A1A2942001308F7 /* Supporting Files */,
+				481EFB651A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m */,
 			);
+			name = SCNavTabBarControllerDemoTests;
 			path = SCNavTabbarDemoTests;
 			sourceTree = "<group>";
 		};
@@ -278,7 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4841AF5F1A1A2942001308F7 /* SCNavTabbarDemoTests.m in Sources */,
+				481EFB661A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
