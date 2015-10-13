@@ -44,6 +44,7 @@
 
 - (void)initConfig
 {
+    _lineHeight = 3.0f; // gevin added
     _items = [@[] mutableCopy];
     _arrowImage = [UIImage imageNamed:SCNavTabbarSourceName(@"arrow.png")];
     
@@ -61,7 +62,7 @@
         _arrowButton.image = _arrowImage;
         _arrowButton.userInteractionEnabled = YES;
         [self addSubview:_arrowButton];
-        [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
+        if( _showShadow ) [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
         
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(functionButtonPressed)];
         [_arrowButton addGestureRecognizer:tapGestureRecognizer];
@@ -71,17 +72,17 @@
     _navgationTabBar.showsHorizontalScrollIndicator = NO;
     [self addSubview:_navgationTabBar];
     
-    [self viewShowShadow:self shadowRadius:10.0f shadowOpacity:10.0f];
+    if( _showShadow ) [self viewShowShadow:self shadowRadius:10.0f shadowOpacity:10.0f];
 }
 
 - (void)showLineWithButtonWidth:(CGFloat)width
 {
-    _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, NAV_TAB_BAR_HEIGHT - 3.0f, width - 4.0f, 3.0f)];
+    _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, NAV_TAB_BAR_HEIGHT - _lineHeight, width - 4.0f, _lineHeight )];
     _line.backgroundColor = UIColorWithRGBA(20.0f, 80.0f, 200.0f, 0.7f);
     [_navgationTabBar addSubview:_line];
 }
 
-- (CGFloat)contentWidthAndAddNavTabBarItemsWithButtonsWidth:(NSArray *)widths
+- (CGFloat)configTabbarItems:(NSArray *)widths
 {
     CGFloat buttonX = DOT_COORDINATE;
     for (NSInteger index = 0; index < [_itemTitles count]; index++)
@@ -97,7 +98,6 @@
         buttonX += [widths[index] floatValue];
     }
     
-    [self showLineWithButtonWidth:[widths[0] floatValue]];
     return buttonX;
 }
 
@@ -107,6 +107,7 @@
     [_arrowButton addGestureRecognizer:tapGestureRecognizer];
 }
 
+/** Gevin note 2015-04-23 tabbar item 被按到時觸發 */
 - (void)itemPressed:(UIButton *)button
 {
     NSInteger index = [_items indexOfObject:button];
@@ -125,7 +126,9 @@
     
     for (NSString *title in titles)
     {
-        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:[UIFont systemFontSize]]};
+        CGSize size = [title sizeWithAttributes:attributes];
+//        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
         NSNumber *width = [NSNumber numberWithFloat:size.width + 40.0f];
         [widths addObject:width];
     }
@@ -171,7 +174,7 @@
 {
     if (pop)
     {
-        [self viewShowShadow:_arrowButton shadowRadius:DOT_COORDINATE shadowOpacity:DOT_COORDINATE];
+        if( _showShadow ) [self viewShowShadow:_arrowButton shadowRadius:DOT_COORDINATE shadowOpacity:DOT_COORDINATE];
         [UIView animateWithDuration:0.5f animations:^{
             _navgationTabBar.hidden = YES;
             _arrowButton.transform = CGAffineTransformMakeRotation(M_PI);
@@ -195,13 +198,53 @@
             _arrowButton.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             _navgationTabBar.hidden = !_navgationTabBar.hidden;
-            [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
+            if( _showShadow ) [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
         }];
     }
 }
 
 #pragma mark -
 #pragma mark - Public Methods
+
+// Gevin added
+- (void)setNaviColor:(UIColor *)naviColor{
+    _naviColor = naviColor;
+    _navgationTabBar.backgroundColor = _naviColor;
+}
+
+// Gevin added
+- (void)setTextColor:(UIColor *)textColor{
+    _textColor = textColor;
+    for (UIButton* button in _items ) {
+        [button setTitleColor: _textColor forState:UIControlStateNormal ];
+    }
+}
+
+// Gevin added
+- (void)setLineColor:(UIColor *)lineColor{
+    _lineColor = lineColor;
+    _line.backgroundColor = _lineColor;
+}
+
+// Gevin added
+- (void)setLineHeight:(float)lineHeight{
+    _lineHeight = lineHeight;
+    _line.frame = (CGRect){_line.frame.origin.x, NAV_TAB_BAR_HEIGHT - _lineHeight, _line.frame.size.width, _lineHeight };
+}
+
+// Gevin added
+- (void)setShowShadow:(BOOL)showShadow{
+    _showShadow = showShadow;
+    if( _showShadow ){
+        [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
+        [self viewShowShadow:self shadowRadius:10.0f shadowOpacity:10.0f];
+    }
+    else{
+        [self viewShowShadow:_arrowButton shadowRadius:0 shadowOpacity:0];
+        [self viewShowShadow:self shadowRadius:0 shadowOpacity:0];
+    }
+}
+
 - (void)setArrowImage:(UIImage *)arrowImage
 {
     _arrowImage = arrowImage ? arrowImage : _arrowImage;
@@ -229,8 +272,10 @@
         [_navgationTabBar setContentOffset:CGPointMake(DOT_COORDINATE, DOT_COORDINATE) animated:YES];
     }
     
+    // Gevin note 2015-04-23 移動底線，原本的放在 - (void)setCurrentItemIndex:(NSInteger)currentItemIndex，會有問題
+    // Gevin note 2015-07-28 移動底線，又改回原本的地方
     [UIView animateWithDuration:0.2f animations:^{
-        _line.frame = CGRectMake(button.frame.origin.x + 2.0f, _line.frame.origin.y, [_itemsWidth[currentItemIndex] floatValue] - 4.0f, _line.frame.size.height);
+        _line.frame = CGRectMake(button.frame.origin.x + 2.0f, _line.frame.origin.y, [_itemsWidth[_currentItemIndex] floatValue] - 4.0f, _line.frame.size.height);
     }];
 }
 
@@ -241,7 +286,9 @@
     _itemsWidth = [self getButtonsWidthWithTitles:_itemTitles];
     if (_itemsWidth.count)
     {
-        CGFloat contentWidth = [self contentWidthAndAddNavTabBarItemsWithButtonsWidth:_itemsWidth];
+        // Gevin modify 2015-07-17 從 [self configTabbarItems:] 移到這裡
+        [self showLineWithButtonWidth:[_itemsWidth[0] floatValue]];
+        CGFloat contentWidth = [self configTabbarItems:_itemsWidth];
         _navgationTabBar.contentSize = CGSizeMake(contentWidth, DOT_COORDINATE);
     }
 }
