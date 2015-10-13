@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   # s.ios.deployment_target = "5.0"
   # s.osx.deployment_target = "10.7"
   s.source       = { :git => "https://github.com/gevin/SCNavTabBarController.git" }
-  s.source_files  = "SCNavTabBarController/**/*.{h,m}"
+  s.source_files  = "SCNavTabBarController/*", "SCNavTabBarController/Views/*", "SCNavTabBarController/ViewControllers/*"
   
   # s.exclude_files = "Classes/Exclude"
   # s.public_header_files = "Classes/**/*.h"
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.resources = "SCNavTabBarController/*.bundle"
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
   
-  # s.framework  = "SomeFramework"
+  s.framework  = "Foundation", "UIKit"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"
