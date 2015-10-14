@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   # s.ios.deployment_target = "5.0"
   # s.osx.deployment_target = "10.7"
-  s.source       = { :git => "https://github.com/gevin/SCNavTabBarController.git", :tag =>"0.0.2" }
+  s.source       = { :git => "https://github.com/gevin/SCNavTabBarController.git" }
   s.source_files  = 'SCNavTabBarController/**/*.{h,m}'
   
   # s.exclude_files = "Classes/Exclude"
