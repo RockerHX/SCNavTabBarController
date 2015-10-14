@@ -57,7 +57,7 @@
     self = [super init];
     if (self)
     {
-        _showArrowButton = NO;
+        _canPopAllItemMenu = NO;
         _containerView = containerView;
         [self addParentController:viewController ];
     }
