@@ -66,7 +66,7 @@
 
 - (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController canPopAllItemMenu:(BOOL)can
 {
-    return [self initWithSubViewControllers:subControllers andParentViewController:viewController containerView:viewController.view showArrowButton:show ];
+    return [self initWithSubViewControllers:subControllers andParentViewController:viewController containerView:viewController.view canPopAllItemMenu:can ];
 }
 
 - (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController containerView:(UIView *)containerView canPopAllItemMenu:(BOOL)can
@@ -150,7 +150,7 @@
 - (void)viewInit
 {
     // Load NavTabBar and content view to show on window
-    _navTabBar = [[SCNavTabBar alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, NAV_TAB_BAR_HEIGHT) showArrowButton:_showArrowButton];
+    _navTabBar = [[SCNavTabBar alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, NAV_TAB_BAR_HEIGHT) canPopAllItemMenu:_canPopAllItemMenu];
     _navTabBar.delegate = self;
     _navTabBar.naviColor = _navTabBarColor;
     _navTabBar.lineColor = _navTabBarLineColor;

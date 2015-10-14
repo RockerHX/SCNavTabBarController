@@ -13,7 +13,7 @@
 #pragma mark - **** Common Macro ****
 #pragma mark -
 
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 
 #define APP_DELEGATE_INSTANCE                       ((AppDelegate*)([UIApplication sharedApplication].delegate))
 #define USER_DEFAULT                                [NSUserDefaults standardUserDefaults]
