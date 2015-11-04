@@ -33,6 +33,7 @@
     self = [super init];
     if (self)
     {
+        [self initConfig];
         _canPopAllItemMenu = can;
     }
     return self;
@@ -43,6 +44,7 @@
     self = [super init];
     if (self)
     {
+        [self initConfig];
         _subViewControllers = subViewControllers;
     }
     return self;
@@ -57,9 +59,8 @@
     self = [super init];
     if (self)
     {
-        _canPopAllItemMenu = NO;
-        _containerView = containerView;
-        [self addParentController:viewController ];
+        [self initConfig];
+        [self addParentController:viewController containerView:containerView];
     }
     return self;
 }
@@ -73,17 +74,20 @@
 {
     self = [self initWithSubViewControllers:subControllers];
     
+    [self initConfig];
     _canPopAllItemMenu = can;
-    _containerView = containerView;
-    [self addParentController:viewController];
+    [self addParentController:viewController containerView:containerView];
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Load all title of children view controllers
+    [self loadChildTitles];
+
     // Do any additional setup after loading the view.
-    [self initConfig];
     [self viewConfig];
 }
 
@@ -115,19 +119,10 @@
 //    NSLog(@"1b main view offset %@", NSStringFromCGPoint( _mainView.contentOffset ) );
 }
 
-//- (void)viewDidAppear:(BOOL)animated{
-//    [super viewDidAppear:animated];
-//    NSLog(@"2 main view offset %@", NSStringFromCGPoint( _mainView.contentOffset ) );
-//}
-
-//- (void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    NSLog(@"3 main view offset %@", NSStringFromCGPoint( _mainView.contentOffset ) );
-//}
-
 #pragma mark - Private Methods
 #pragma mark -
+
+//  config property default value
 - (void)initConfig
 {
     // Iinitialize value
@@ -136,8 +131,17 @@
     
     // Gevin added
     _dragToSwitchView = YES;
-    _showShadow = YES;
+    _showShadow = NO;
+    _canPopAllItemMenu = NO;
     
+    _navTabBarTextColor = [UIColor darkGrayColor];
+    _navTabBarSelectedTextColor = [UIColor darkGrayColor];
+    
+}
+
+//  load child controller title
+- (void)loadChildTitles
+{
     // Load all title of children view controllers
     _titles = [[NSMutableArray alloc] initWithCapacity:_subViewControllers.count];
     for (UIViewController *viewController in _subViewControllers)
@@ -147,23 +151,28 @@
     }
 }
 
-- (void)viewInit
+//  init content view and config
+- (void)viewConfig
 {
+    // view init
     // Load NavTabBar and content view to show on window
     _navTabBar = [[SCNavTabBar alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, NAV_TAB_BAR_HEIGHT) canPopAllItemMenu:_canPopAllItemMenu];
     _navTabBar.delegate = self;
     _navTabBar.naviColor = _navTabBarColor;
     _navTabBar.lineColor = _navTabBarLineColor;
     _navTabBar.itemTitles = _titles;
+    _navTabBar.textColor = _navTabBarTextColor;
+    _navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
     _navTabBar.arrowImage = _navTabBarArrowImage;
     _navTabBar.showShadow = _showShadow; // Gevin added
     [_navTabBar updateData];
-
+    
     _mainView = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, _navTabBar.frame.origin.y + _navTabBar.frame.size.height, SCREEN_WIDTH, SCREEN_HEIGHT - _navTabBar.frame.origin.y - _navTabBar.frame.size.height - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT)];
     _mainView.delegate = self;
     _mainView.pagingEnabled = YES;
     _mainView.bounces = _mainViewBounces;
     _mainView.showsHorizontalScrollIndicator = NO;
+    
     // 2015-03-09 Gevin Added
     int cnt = 1;
     if ( _dragToSwitchView ) {
@@ -173,18 +182,13 @@
     [self.view addSubview:_mainView];
     [self.view addSubview:_navTabBar];
     
+    //Gevin added for autolayout
     _navTabBar.translatesAutoresizingMaskIntoConstraints = NO;
     _mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    //Gevin added for autolayout
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_navTabBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_navTabBar)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_mainView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mainView)]];
-    NSString* statement = [NSString stringWithFormat:@"V:|[_navTabBar(%f)]-[_mainView]|",NAVIGATION_BAR_HEIGHT];
+    NSString* statement = [NSString stringWithFormat:@"V:|[_navTabBar(%f)][_mainView]|",NAVIGATION_BAR_HEIGHT];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:statement options:0 metrics:nil views:NSDictionaryOfVariableBindings(_navTabBar,_mainView)]];
-}
-
-- (void)viewConfig
-{
-    [self viewInit];
     
     // Load children view controllers and add to content view
     [_subViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
@@ -223,24 +227,35 @@
         navTabBarColor = NavTabbarColor;
     }
     _navTabBarColor = navTabBarColor;
-    _navTabBar.naviColor = _navTabBarColor;
+    if(_navTabBar)_navTabBar.naviColor = _navTabBarColor;
 }
 
 - (void)setNavTabBarLineColor:(UIColor *)navTabBarLineColor{
     _navTabBarLineColor = navTabBarLineColor;
-    _navTabBar.lineColor = navTabBarLineColor;
+    if(_navTabBar)_navTabBar.lineColor = navTabBarLineColor;
 }
 
 - (void)setNavTabBarTextColor:(UIColor *)navTabBarTextColor{
     _navTabBarTextColor = navTabBarTextColor;
-    _navTabBar.textColor = _navTabBarTextColor;
+    if(_navTabBar)_navTabBar.textColor = _navTabBarTextColor;
 }
 
+- (void)setNavTabBarSelectedTextColor:(UIColor *)navTabBarSelectedTextColor
+{
+    _navTabBarSelectedTextColor = navTabBarSelectedTextColor;
+    if(_navTabBar)_navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
+}
 
 
 // modify by Gevin ，多一個 container view，因為有可能不是要滿版的，containerView 必須要是 viewController 的
 - (void)addParentController:(UIViewController *)viewController
 {
+    [self addParentController:viewController containerView:viewController.view];
+}
+
+- (void)addParentController:(UIViewController *)viewController containerView:(UIView*)containerView
+{
+    _containerView = containerView;
     // Gevin modify: 如果加這行，會把 SCNavTabBarController 的 parent Controller 的 view 下移
     // Close UIScrollView characteristic on IOS7 and later
     if ( _containerView == viewController.view && [viewController respondsToSelector:@selector(edgesForExtendedLayout)])

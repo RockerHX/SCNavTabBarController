@@ -24,6 +24,7 @@
 @property (nonatomic, strong)   UIImage     *navTabBarArrowImage;
 @property (nonatomic, assign)   UIView      *containerView;
 @property (nonatomic, strong)   UIColor     *navTabBarTextColor;        // Gevin added
+@property (nonatomic, strong)   UIColor     *navTabBarSelectedTextColor;// Gevin added
 @property (nonatomic)           BOOL        showShadow;                 // Gevin added
 @property (nonatomic)           float       navTabBarLineHeight;        // Gevin added
 
@@ -74,6 +75,8 @@
  *  @param viewController - set parent view controller
  */
 - (void)addParentController:(UIViewController *)viewController;
+
+- (void)addParentController:(UIViewController *)viewController containerView:(UIView*)containerView;
 
 /**
  *  Show specify index of child view controller
