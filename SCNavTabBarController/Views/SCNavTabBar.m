@@ -90,7 +90,8 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor: (_textColor?_textColor:[UIColor blackColor]) forState:UIControlStateNormal];
+        [button setTitleColor: (_selectedTextColor?_selectedTextColor:[UIColor blackColor]) forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_navgationTabBar addSubview:button];
         
@@ -221,6 +222,14 @@
 }
 
 // Gevin added
+- (void)setSelectedTextColor:(UIColor *)selectedTextColor{
+    _selectedTextColor = selectedTextColor;
+    for (UIButton* button in _items ) {
+        [button setTitleColor: _selectedTextColor forState:UIControlStateSelected ];
+    }
+}
+
+// Gevin added
 - (void)setLineColor:(UIColor *)lineColor{
     _lineColor = lineColor;
     _line.backgroundColor = _lineColor;
@@ -253,8 +262,13 @@
 
 - (void)setCurrentItemIndex:(NSInteger)currentItemIndex
 {
+    // Gevin added 2105-11-4 selected text color
+    UIButton *prebutton = _items[_currentItemIndex];
+    prebutton.selected = NO;
+    
     _currentItemIndex = currentItemIndex;
     UIButton *button = _items[currentItemIndex];
+    button.selected = YES;
     CGFloat flag = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
     
     if (button.frame.origin.x + button.frame.size.width > flag)
@@ -279,6 +293,7 @@
     }];
 }
 
+//  call by SCNavTabBarController
 - (void)updateData
 {
     _arrowButton.backgroundColor = self.backgroundColor;
