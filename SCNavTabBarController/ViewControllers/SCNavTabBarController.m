@@ -74,7 +74,7 @@
 {
     self = [self initWithSubViewControllers:subControllers];
     
-    [self initConfig];
+//    [self initConfig];
     _canPopAllItemMenu = can;
     [self addParentController:viewController containerView:containerView];
     return self;
