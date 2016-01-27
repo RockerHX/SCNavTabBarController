@@ -82,9 +82,10 @@
 {
     // 為了讓 updateData 可以重覆呼叫
     if (!_line) {
-        _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, _barHeight - _lineHeight, width - 4.0f, _lineHeight )];
+        _line = [[UIView alloc] init];
         [_navgationTabBar addSubview:_line];
     }
+    _line.frame = CGRectMake(2.0f, _barHeight - _lineHeight, width - 4.0f, _lineHeight );
     _line.backgroundColor = UIColorWithRGBA(20.0f, 80.0f, 200.0f, 0.7f);
 }
 
