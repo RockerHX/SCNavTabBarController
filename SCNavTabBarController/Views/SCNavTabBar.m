@@ -47,7 +47,7 @@
     _lineHeight = 3.0f; // gevin added
     _items = [@[] mutableCopy];
     _arrowImage = [UIImage imageNamed:SCNavTabbarSourceName(@"arrow.png")];
-    
+    _textFont = [UIFont systemFontOfSize: 15 ];
     [self viewConfig];
     [self addTapGestureRecognizer];
 }
@@ -106,9 +106,7 @@
         UIButton *button = _items[index];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
         //  2016-01-27 Gevin added for textFont
-        if ( _textFont ) {
-            button.titleLabel.font = _textFont;
-        }
+        button.titleLabel.font = _textFont;
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
         [button setTitleColor: (_textColor?_textColor:[UIColor blackColor]) forState:UIControlStateNormal];
         [button setTitleColor: (_selectedTextColor?_selectedTextColor:[UIColor blackColor]) forState:UIControlStateSelected];
@@ -144,11 +142,10 @@
     for (NSString *title in titles)
     {
         // 2016-01-27 Gevin added for textFont
-        UIFont *font = _textFont ? _textFont : [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        NSDictionary *attributes = @{NSFontAttributeName:font};
+        NSDictionary *attributes = @{NSFontAttributeName:_textFont};
         CGSize size = [title sizeWithAttributes:attributes];
 //        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
-        NSNumber *width = [NSNumber numberWithFloat:size.width + 40.0f];
+        NSNumber *width = [NSNumber numberWithFloat:size.width + 30.0f];
         [widths addObject:width];
     }
     

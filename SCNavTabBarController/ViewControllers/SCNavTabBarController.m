@@ -133,7 +133,7 @@
     _dragToSwitchView = YES;
     _showShadow = NO;
     _canPopAllItemMenu = NO;
-    
+    _navTabBarTextFont = [UIFont systemFontOfSize:15];
     _navTabBarTextColor = [UIColor darkGrayColor];
     _navTabBarSelectedTextColor = [UIColor darkGrayColor];
     
@@ -161,7 +161,6 @@
     _navTabBar.naviColor = _navTabBarColor;
     _navTabBar.lineColor = _navTabBarLineColor;
     _navTabBar.itemTitles = _titles;
-    _navTabBar.textFont = _navTabBarTextFont;
     _navTabBar.textColor = _navTabBarTextColor;
     _navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
     _navTabBar.arrowImage = _navTabBarArrowImage;
