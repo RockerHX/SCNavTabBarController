@@ -39,22 +39,6 @@
     return self;
 }
 
-
-#pragma mark -
-#pragma mark - Setter
-
-- (void)setTextFont:(UIFont *)textFont
-{
-    _textFont = textFont;
-    if ( _items.count > 0 ) {
-        for ( UIButton *button in _items ) {
-            button.titleLabel.font = _textFont;
-        }
-    }
-    
-}
-
-
 #pragma mark -
 #pragma mark - Private Methods
 
@@ -93,29 +77,41 @@
 
 - (void)showLineWithButtonWidth:(CGFloat)width
 {
-    _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, NAV_TAB_BAR_HEIGHT - _lineHeight, width - 4.0f, _lineHeight )];
+    // 為了讓 updateData 可以重覆呼叫
+    if (!_line) {
+        _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, NAV_TAB_BAR_HEIGHT - _lineHeight, width - 4.0f, _lineHeight )];
+        [_navgationTabBar addSubview:_line];
+    }
     _line.backgroundColor = UIColorWithRGBA(20.0f, 80.0f, 200.0f, 0.7f);
-    [_navgationTabBar addSubview:_line];
 }
 
 - (CGFloat)configTabbarItems:(NSArray *)widths
 {
+    // 2016-01-27 Gevin added for textFont
     CGFloat buttonX = DOT_COORDINATE;
+    //  建立 item object，每個物件只執行一次
+    if ( _items.count < _itemTitles.count ) {
+        NSInteger start = _items.count;
+        for (NSInteger index = start; index < [_itemTitles count]; index++) {
+            UIButton *button = button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [_navgationTabBar addSubview:button];
+            [_items addObject:button];
+        }
+    }
+    
+    //  設定 item object
     for (NSInteger index = 0; index < [_itemTitles count]; index++)
     {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *button = _items[index];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
-        //  2016-01-27 Gevin added
+        //  2016-01-27 Gevin added for textFont
         if ( _textFont ) {
             button.titleLabel.font = _textFont;
         }
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
         [button setTitleColor: (_textColor?_textColor:[UIColor blackColor]) forState:UIControlStateNormal];
         [button setTitleColor: (_selectedTextColor?_selectedTextColor:[UIColor blackColor]) forState:UIControlStateSelected];
-        [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [_navgationTabBar addSubview:button];
-        
-        [_items addObject:button];
         buttonX += [widths[index] floatValue];
     }
     
@@ -147,7 +143,9 @@
     
     for (NSString *title in titles)
     {
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:[UIFont systemFontSize]]};
+        // 2016-01-27 Gevin added for textFont
+        UIFont *font = _textFont ? _textFont : [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        NSDictionary *attributes = @{NSFontAttributeName:font};
         CGSize size = [title sizeWithAttributes:attributes];
 //        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
         NSNumber *width = [NSNumber numberWithFloat:size.width + 40.0f];
@@ -274,6 +272,16 @@
     }
 }
 
+//  2016-01-27 Gevin added for textFont
+- (void)setTextFont:(UIFont *)textFont
+{
+    _textFont = textFont;
+    if ( _items.count > 0 ) {
+        [self updateData];
+    }
+    
+}
+
 - (void)setArrowImage:(UIImage *)arrowImage
 {
     _arrowImage = arrowImage ? arrowImage : _arrowImage;
@@ -317,7 +325,7 @@
 - (void)updateData
 {
     _arrowButton.backgroundColor = self.backgroundColor;
-    
+    //  計算 button width
     _itemsWidth = [self getButtonsWidthWithTitles:_itemTitles];
     if (_itemsWidth.count)
     {
