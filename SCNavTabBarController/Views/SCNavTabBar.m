@@ -47,7 +47,10 @@
     _lineHeight = 3.0f; // gevin added
     _items = [@[] mutableCopy];
     _arrowImage = [UIImage imageNamed:SCNavTabbarSourceName(@"arrow.png")];
-    _textFont = [UIFont systemFontOfSize: 15 ];
+    _textFont = [UIFont systemFontOfSize: 17 ];
+    _itemSpace = 30;
+    _barHeight = 60;
+    
     [self viewConfig];
     [self addTapGestureRecognizer];
 }
@@ -68,7 +71,7 @@
         [_arrowButton addGestureRecognizer:tapGestureRecognizer];
     }
 
-    _navgationTabBar = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, functionButtonX, NAV_TAB_BAR_HEIGHT)];
+    _navgationTabBar = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, functionButtonX, _barHeight)];
     _navgationTabBar.showsHorizontalScrollIndicator = NO;
     [self addSubview:_navgationTabBar];
     
@@ -79,7 +82,7 @@
 {
     // 為了讓 updateData 可以重覆呼叫
     if (!_line) {
-        _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, NAV_TAB_BAR_HEIGHT - _lineHeight, width - 4.0f, _lineHeight )];
+        _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, _barHeight - _lineHeight, width - 4.0f, _lineHeight )];
         [_navgationTabBar addSubview:_line];
     }
     _line.backgroundColor = UIColorWithRGBA(20.0f, 80.0f, 200.0f, 0.7f);
@@ -104,7 +107,7 @@
     for (NSInteger index = 0; index < [_itemTitles count]; index++)
     {
         UIButton *button = _items[index];
-        button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
+        button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], _barHeight);
         //  2016-01-27 Gevin added for textFont
         button.titleLabel.font = _textFont;
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
@@ -145,7 +148,7 @@
         NSDictionary *attributes = @{NSFontAttributeName:_textFont};
         CGSize size = [title sizeWithAttributes:attributes];
 //        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
-        NSNumber *width = [NSNumber numberWithFloat:size.width + 30.0f];
+        NSNumber *width = [NSNumber numberWithFloat:size.width + _itemSpace ];
         [widths addObject:width];
     }
     
@@ -276,7 +279,23 @@
     if ( _items.count > 0 ) {
         [self updateData];
     }
+}
+
+- (void)setItemSpace:(float)itemSpace
+{
+    _itemSpace = itemSpace;
+    if ( _itemSpace > -1 ) {
+        [self updateData];
+    }
+}
+
+- (void)setBarHeight:(float)barHeight
+{
+    _barHeight = barHeight;
     
+    CGFloat functionButtonX = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
+    _navgationTabBar.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, functionButtonX, _barHeight);
+    [self updateData];
 }
 
 - (void)setArrowImage:(UIImage *)arrowImage

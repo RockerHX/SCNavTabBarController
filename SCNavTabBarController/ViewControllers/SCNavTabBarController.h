@@ -28,6 +28,8 @@
 @property (nonatomic, strong)   UIColor     *navTabBarSelectedTextColor;// Gevin added
 @property (nonatomic)           BOOL        showShadow;                 // Gevin added
 @property (nonatomic)           float       navTabBarLineHeight;        // Gevin added
+@property (nonatomic)           float       navTabBarItemSpace;         // Gevin added
+@property (nonatomic)           float       navTabBarHeight;            // Gevin added
 
 /**
  *  Initialize Methods
