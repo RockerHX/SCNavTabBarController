@@ -161,6 +161,7 @@
     _navTabBar.naviColor = _navTabBarColor;
     _navTabBar.lineColor = _navTabBarLineColor;
     _navTabBar.itemTitles = _titles;
+    _navTabBar.textFont = _navTabBarTextFont;
     _navTabBar.textColor = _navTabBarTextColor;
     _navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
     _navTabBar.arrowImage = _navTabBarArrowImage;
@@ -246,6 +247,13 @@
     if(_navTabBar)_navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
 }
 
+- (void)setNavTabBarTextFont:(UIFont *)navTabBarTextFont
+{
+    _navTabBarTextFont = navTabBarTextFont;
+    if ( _navTabBarTextFont ) {
+        _navTabBar.textFont = _navTabBarTextFont;
+    }
+}
 
 // modify by Gevin ，多一個 container view，因為有可能不是要滿版的，containerView 必須要是 viewController 的
 - (void)addParentController:(UIViewController *)viewController

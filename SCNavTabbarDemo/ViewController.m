@@ -54,13 +54,13 @@
     UIViewController *ninghtViewController = [[UIViewController alloc] init];
     ninghtViewController.title = @"科技";
     ninghtViewController.view.backgroundColor = [UIColor redColor];
+
+    NSArray *vcs  = @[oneViewController, twoViewController, threeViewController, fourViewController, fiveViewController, sixViewController, sevenViewController, eightViewController, ninghtViewController];
     
-    SCNavTabBarController *navTabBarController = [[SCNavTabBarController alloc] init];
-    navTabBarController.subViewControllers = @[oneViewController, twoViewController, threeViewController, fourViewController, fiveViewController, sixViewController, sevenViewController, eightViewController, ninghtViewController];
-    navTabBarController.canPopAllItemMenu = YES;
+    SCNavTabBarController *navTabBarController = [[SCNavTabBarController alloc] initWithSubViewControllers:vcs andParentViewController:self canPopAllItemMenu:NO];
     navTabBarController.navTabBarColor = [UIColor colorWithRed:0.5 green:0.5 blue:1 alpha:1];
     navTabBarController.navTabBarSelectedTextColor = [UIColor colorWithRed:0.8 green:0.5 blue:0.5 alpha:1];
-    [navTabBarController addParentController:self];
+//    navTabBarController.navTabBarTextFont = [UIFont systemFontOfSize: 14 ];
 
 }
 

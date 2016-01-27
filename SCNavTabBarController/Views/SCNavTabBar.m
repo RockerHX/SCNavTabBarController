@@ -39,6 +39,22 @@
     return self;
 }
 
+
+#pragma mark -
+#pragma mark - Setter
+
+- (void)setTextFont:(UIFont *)textFont
+{
+    _textFont = textFont;
+    if ( _items.count > 0 ) {
+        for ( UIButton *button in _items ) {
+            button.titleLabel.font = _textFont;
+        }
+    }
+    
+}
+
+
 #pragma mark -
 #pragma mark - Private Methods
 
@@ -89,6 +105,10 @@
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
+        //  2016-01-27 Gevin added
+        if ( _textFont ) {
+            button.titleLabel.font = _textFont;
+        }
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
         [button setTitleColor: (_textColor?_textColor:[UIColor blackColor]) forState:UIControlStateNormal];
         [button setTitleColor: (_selectedTextColor?_selectedTextColor:[UIColor blackColor]) forState:UIControlStateSelected];
