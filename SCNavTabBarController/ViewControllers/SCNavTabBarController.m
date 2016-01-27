@@ -18,6 +18,7 @@
     SCNavTabBar     *_navTabBar;                // NavTabBar: press item on it to exchange view
     UIScrollView    *_mainView;                 // content view
     
+    NSLayoutConstraint *_constraintNavTabBarHeight;
     
 }
 
@@ -133,10 +134,10 @@
     _dragToSwitchView = YES;
     _showShadow = NO;
     _canPopAllItemMenu = NO;
-    _navTabBarTextFont = [UIFont systemFontOfSize:15];
+    _navTabBarTextFont = [UIFont systemFontOfSize:17];
     _navTabBarTextColor = [UIColor darkGrayColor];
     _navTabBarSelectedTextColor = [UIColor darkGrayColor];
-    
+    _navTabBarHeight = 60;
 }
 
 //  load child controller title
@@ -167,7 +168,7 @@
     _navTabBar.showShadow = _showShadow; // Gevin added
     [_navTabBar updateData];
     
-    _mainView = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, _navTabBar.frame.origin.y + _navTabBar.frame.size.height, SCREEN_WIDTH, SCREEN_HEIGHT - _navTabBar.frame.origin.y - _navTabBar.frame.size.height - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT)];
+    _mainView = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, _navTabBar.frame.origin.y + _navTabBar.frame.size.height, SCREEN_WIDTH, SCREEN_HEIGHT - _navTabBar.frame.origin.y - _navTabBar.frame.size.height - STATUS_BAR_HEIGHT - _navTabBar.barHeight )];
     _mainView.delegate = self;
     _mainView.pagingEnabled = YES;
     _mainView.bounces = _mainViewBounces;
@@ -187,8 +188,9 @@
     _mainView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_navTabBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_navTabBar)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_mainView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mainView)]];
-    NSString* statement = [NSString stringWithFormat:@"V:|[_navTabBar(%f)][_mainView]|",NAVIGATION_BAR_HEIGHT];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:statement options:0 metrics:nil views:NSDictionaryOfVariableBindings(_navTabBar,_mainView)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_navTabBar][_mainView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_navTabBar,_mainView)]];
+    _constraintNavTabBarHeight = [NSLayoutConstraint constraintWithItem:_navTabBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant: _navTabBarHeight ];
+    [self.view addConstraint: _constraintNavTabBarHeight ];
     
     // Load children view controllers and add to content view
     [_subViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
@@ -252,6 +254,24 @@
     if ( _navTabBarTextFont ) {
         _navTabBar.textFont = _navTabBarTextFont;
     }
+}
+
+- (void)setNavTabBarItemSpace:(float)navTabBarItemSpace
+{
+    _navTabBarItemSpace = navTabBarItemSpace;
+    if ( _navTabBarItemSpace > -1 ) {
+        _navTabBar.itemSpace = _navTabBarItemSpace;
+    }
+}
+
+- (void)setNavTabBarHeight:(float)navTabBarHeight
+{
+    _navTabBarHeight = navTabBarHeight;
+    if ( _navTabBarHeight < ( [_navTabBar.textFont pointSize] + 10 ) ) {
+        _navTabBarHeight = [_navTabBar.textFont pointSize] + 10;
+    }
+    _navTabBar.barHeight = _navTabBarHeight;
+    _constraintNavTabBarHeight.constant = _navTabBarHeight;
 }
 
 // modify by Gevin ，多一個 container view，因為有可能不是要滿版的，containerView 必須要是 viewController 的
