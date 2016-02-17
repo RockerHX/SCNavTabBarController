@@ -113,7 +113,7 @@
         button.titleLabel.font = _textFont;
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
         [button setTitleColor: (_textColor?_textColor:[UIColor blackColor]) forState:UIControlStateNormal];
-        [button setTitleColor: (_selectedTextColor?_selectedTextColor:[UIColor blackColor]) forState:UIControlStateSelected];
+        if ( _selectedTextColor) [button setTitleColor: _selectedTextColor forState:UIControlStateSelected];
         buttonX += [widths[index] floatValue];
     }
     
@@ -236,15 +236,17 @@
 - (void)setTextColor:(UIColor *)textColor{
     _textColor = textColor;
     for (UIButton* button in _items ) {
-        [button setTitleColor: _textColor forState:UIControlStateNormal ];
+        [button setTitleColor: _textColor?_textColor:[UIColor blackColor] forState:UIControlStateNormal ];
     }
 }
 
 // Gevin added
 - (void)setSelectedTextColor:(UIColor *)selectedTextColor{
     _selectedTextColor = selectedTextColor;
-    for (UIButton* button in _items ) {
-        [button setTitleColor: _selectedTextColor forState:UIControlStateSelected ];
+    if (_selectedTextColor) {
+        for (UIButton* button in _items ) {
+            [button setTitleColor: _selectedTextColor forState:UIControlStateSelected ];
+        }
     }
 }
 
