@@ -23,10 +23,13 @@
 @property (nonatomic, strong)   UIColor     *navTabBarLineColor;
 @property (nonatomic, strong)   UIImage     *navTabBarArrowImage;
 @property (nonatomic, assign)   UIView      *containerView;
+@property (nonatomic, strong)   UIFont      *navTabBarTextFont;         // Gevin added
 @property (nonatomic, strong)   UIColor     *navTabBarTextColor;        // Gevin added
 @property (nonatomic, strong)   UIColor     *navTabBarSelectedTextColor;// Gevin added
 @property (nonatomic)           BOOL        showShadow;                 // Gevin added
 @property (nonatomic)           float       navTabBarLineHeight;        // Gevin added
+@property (nonatomic)           float       navTabBarItemSpace;         // Gevin added
+@property (nonatomic)           float       navTabBarHeight;            // Gevin added
 
 /**
  *  Initialize Methods
