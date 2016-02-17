@@ -136,7 +136,7 @@
     _canPopAllItemMenu = NO;
     _navTabBarTextFont = [UIFont systemFontOfSize:17];
     _navTabBarTextColor = [UIColor darkGrayColor];
-    _navTabBarSelectedTextColor = [UIColor darkGrayColor];
+//    _navTabBarSelectedTextColor = [UIColor darkGrayColor];
     _navTabBarHeight = 60;
 }
 
@@ -163,7 +163,7 @@
     _navTabBar.lineColor = _navTabBarLineColor;
     _navTabBar.itemTitles = _titles;
     _navTabBar.textColor = _navTabBarTextColor;
-    _navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
+    _navTabBar.selectedTextColor = nil;
     _navTabBar.arrowImage = _navTabBarArrowImage;
     _navTabBar.showShadow = _showShadow; // Gevin added
     [_navTabBar updateData];
