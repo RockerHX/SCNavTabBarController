@@ -91,7 +91,7 @@
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
         [button setTitleColor: (_textColor?_textColor:[UIColor blackColor]) forState:UIControlStateNormal];
-        [button setTitleColor: (_selectedTextColor?_selectedTextColor:[UIColor blackColor]) forState:UIControlStateSelected];
+        [button setTitleColor: (_selectedTextColor?_selectedTextColor:_textColor) forState:UIControlStateSelected];
         [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_navgationTabBar addSubview:button];
         
@@ -218,6 +218,7 @@
     _textColor = textColor;
     for (UIButton* button in _items ) {
         [button setTitleColor: _textColor forState:UIControlStateNormal ];
+        if ( _selectedTextColor == nil ) [button setTitleColor: _textColor forState:UIControlStateNormal ];
     }
 }
 
