@@ -135,7 +135,7 @@
     _canPopAllItemMenu = NO;
     
     _navTabBarTextColor = [UIColor darkGrayColor];
-    _navTabBarSelectedTextColor = [UIColor darkGrayColor];
+    _navTabBarSelectedTextColor = nil;
     
 }
 
@@ -162,7 +162,7 @@
     _navTabBar.lineColor = _navTabBarLineColor;
     _navTabBar.itemTitles = _titles;
     _navTabBar.textColor = _navTabBarTextColor;
-    _navTabBar.selectedTextColor = _navTabBarSelectedTextColor;
+    _navTabBar.selectedTextColor = nil;
     _navTabBar.arrowImage = _navTabBarArrowImage;
     _navTabBar.showShadow = _showShadow; // Gevin added
     [_navTabBar updateData];
