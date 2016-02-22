@@ -319,22 +319,34 @@
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 //{
-//    _currentIndex = scrollView.contentOffset.x / SCREEN_WIDTH;
-//    NSLog(@"SCNavTabBarController .... scrollView did scroll");
+//    NSInteger index = (NSInteger)( _mainView.contentOffset.x/SCREEN_WIDTH);
+//    NSLog(@"offset x %f , index %ld", _mainView.contentOffset.x, index);
+////    if ( index != _currentIndex ) {
+////        _currentIndex = index;
+////        _navTabBar.currentItemIndex = index;
+////    }
 //}
+
+//  停止滑動時呼叫
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSInteger index = (NSInteger)( _mainView.contentOffset.x/SCREEN_WIDTH);
+//    NSLog(@"offset x %f , index %ld >> end", _mainView.contentOffset.x, index);
+    if ( index != _currentIndex ) {
+        _currentIndex = index;
+        _navTabBar.currentItemIndex = index;
+    }    
+}
 
 #pragma mark - SCNavTabBarDelegate Methods
 #pragma mark -
 - (void)itemDidSelectedWithIndex:(NSInteger)index
 {
-    // 2015-03-13 Gevin Added，切換 sub controller 要呼叫相映method
-//    UIViewController *vc = _subViewControllers[index];
-//    [vc viewWillAppear:YES];
-    [_mainView setContentOffset:CGPointMake(index * SCREEN_WIDTH, DOT_COORDINATE) animated:_scrollAnimation];
-//    [vc viewDidAppear:YES];
     _currentIndex = index;
     _navTabBar.currentItemIndex = index;
-
+    CGPoint point = CGPointMake(index * SCREEN_WIDTH, DOT_COORDINATE);
+    NSLog(@"tab move to %.0f index %ld", point ,index );
+    [_mainView setContentOffset:point animated:_scrollAnimation];
 }
 
 - (void)shouldPopNavgationItemMenu:(BOOL)pop height:(CGFloat)height
