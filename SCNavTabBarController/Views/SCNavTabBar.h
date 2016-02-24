@@ -58,7 +58,7 @@
 /**
  *  Update Item Data
  */
-- (void)updateData;
+- (void)updateItemLayout;
 
 /**
  *  Refresh All Subview
