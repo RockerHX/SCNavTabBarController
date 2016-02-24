@@ -46,18 +46,20 @@
 {
     _lineHeight = 3.0f; // gevin added
     _items = [@[] mutableCopy];
+    _naviColor = NavTabbarColor;
     _arrowImage = [UIImage imageNamed:SCNavTabbarSourceName(@"arrow.png")];
     _textFont = [UIFont systemFontOfSize: 17 ];
+    _textColor = [UIColor darkGrayColor];
+    _selectedTextColor = nil;
     _itemSpace = 30;
     _barHeight = 60;
     _itemWidth = 0;    // 0 為自動設定，若指定的話，就每個都是這個寬
+    _lineColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.6 alpha:1];
+    _showShadow = NO;
     
-    [self viewConfig];
-    [self addTapGestureRecognizer];
-}
-
-- (void)viewConfig
-{
+    //------------------------------
+    //  init sub view instance
+    //------------------------------
     CGFloat functionButtonX = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
     if (_canPopAllItemMenu)
     {
@@ -71,40 +73,36 @@
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(functionButtonPressed)];
         [_arrowButton addGestureRecognizer:tapGestureRecognizer];
     }
-
+    
+    //  int navi tab bar
     _navgationTabBar = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, functionButtonX, _barHeight)];
     _navgationTabBar.showsHorizontalScrollIndicator = NO;
     [self addSubview:_navgationTabBar];
     
+    //  init focus line
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = _lineColor;
+    [_navgationTabBar addSubview:_line];
+    
     if( _showShadow ) [self viewShowShadow:self shadowRadius:10.0f shadowOpacity:10.0f];
-}
 
-- (void)showLineWithButtonWidth:(CGFloat)width
-{
-    // 為了讓 updateData 可以重覆呼叫
-    if (!_line) {
-        _line = [[UIView alloc] init];
-        [_navgationTabBar addSubview:_line];
-    }
-    _line.frame = CGRectMake(2.0f, _barHeight - _lineHeight, width - 4.0f, _lineHeight );
-    _line.backgroundColor = UIColorWithRGBA(20.0f, 80.0f, 200.0f, 0.7f);
 }
 
 - (CGFloat)configTabbarItems:(NSArray *)widths
 {
-    // 2016-01-27 Gevin added for textFont
-    CGFloat buttonX = DOT_COORDINATE;
-    //  建立 item object，每個物件只執行一次
-    if ( _items.count < _itemTitles.count ) {
-        NSInteger start = _items.count;
-        for (NSInteger index = start; index < [_itemTitles count]; index++) {
-            UIButton *button = button = [UIButton buttonWithType:UIButtonTypeCustom];
-            [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [_navgationTabBar addSubview:button];
-            [_items addObject:button];
-        }
-    }
+//    // 2016-01-27 Gevin added for textFont
+//    //  建立 item object，每個物件只執行一次
+//    if ( _items.count < _itemTitles.count ) {
+//        NSInteger start = _items.count;
+//        for (NSInteger index = start; index < [_itemTitles count]; index++) {
+//            UIButton *button = button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
+//            [_navgationTabBar addSubview:button];
+//            [_items addObject:button];
+//        }
+//    }
     
+    CGFloat buttonX = DOT_COORDINATE;
     //  設定 item object
     for (NSInteger index = 0; index < [_itemTitles count]; index++){
         UIButton *button = _items[index];
@@ -118,12 +116,6 @@
     }
     
     return buttonX;
-}
-
-- (void)addTapGestureRecognizer
-{
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(functionButtonPressed)];
-    [_arrowButton addGestureRecognizer:tapGestureRecognizer];
 }
 
 /** Gevin note 2015-04-23 tabbar item 被按到時觸發 */
@@ -285,7 +277,7 @@
 {
     _textFont = textFont;
     if ( _items.count > 0 ) {
-        [self updateData];
+        [self updateItemLayout];
     }
 }
 
@@ -293,14 +285,14 @@
 {
     _itemSpace = itemSpace;
     if ( _itemSpace > -1 ) {
-        [self updateData];
+        [self updateItemLayout];
     }
 }
 
 - (void)setItemWidth:(float)itemWidth
 {
     _itemWidth = itemWidth;
-    [self updateData];
+    [self updateItemLayout];
 }
 
 - (void)setBarHeight:(float)barHeight
@@ -309,13 +301,28 @@
     
     CGFloat functionButtonX = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
     _navgationTabBar.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, functionButtonX, _barHeight);
-    [self updateData];
+    [self updateItemLayout];
 }
 
 - (void)setArrowImage:(UIImage *)arrowImage
 {
     _arrowImage = arrowImage ? arrowImage : _arrowImage;
     _arrowButton.image = _arrowImage;
+}
+
+- (void)setItemTitles:(NSArray *)itemTitles
+{
+    _itemTitles = itemTitles;
+    
+    if ( _items.count < _itemTitles.count ) {
+        NSInteger start = _items.count;
+        for (NSInteger index = start; index < [_itemTitles count]; index++) {
+            UIButton *button = button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [_navgationTabBar addSubview:button];
+            [_items addObject:button];
+        }
+    }
 }
 
 - (void)setCurrentItemIndex:(NSInteger)currentItemIndex
@@ -352,15 +359,20 @@
 }
 
 //  call by SCNavTabBarController
-- (void)updateData
+- (void)updateItemLayout
 {
     _arrowButton.backgroundColor = self.backgroundColor;
     //  計算 button width
     _itemsWidth = [self getButtonsWidthWithTitles:_itemTitles];
     if (_itemsWidth.count)
     {
-        // Gevin modify 2015-07-17 從 [self configTabbarItems:] 移到這裡
-        [self showLineWithButtonWidth:[_itemsWidth[0] floatValue]];
+        // 設定線寬及顏色
+        // 取目前選取的 item 寬，做為線的寬
+        [_navgationTabBar bringSubviewToFront:_line];
+        float width = [_itemsWidth[_currentItemIndex] floatValue];
+        _line.frame = CGRectMake(2.0f, _barHeight - _lineHeight, width - 4.0f, _lineHeight );
+        _line.backgroundColor = _lineColor;
+        
         CGFloat contentWidth = [self configTabbarItems:_itemsWidth];
         _navgationTabBar.contentSize = CGSizeMake(contentWidth, DOT_COORDINATE);
     }
