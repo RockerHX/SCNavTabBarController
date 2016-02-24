@@ -62,7 +62,9 @@
     navTabBarController.navTabBarSelectedTextColor = [UIColor colorWithRed:0.8 green:0.5 blue:0.5 alpha:1];
     navTabBarController.navTabBarTextFont = [UIFont systemFontOfSize: 20 ];
     navTabBarController.navTabBarItemSpace = 40;
-    navTabBarController.navTabBarHeight = 45;
+//    navTabBarController.navTabBarHeight = 50;
+    CGRect rect = [UIScreen mainScreen].bounds;
+    navTabBarController.navTabBarItemWidth = rect.size.width/3;
 }
 
 - (void)didReceiveMemoryWarning {
