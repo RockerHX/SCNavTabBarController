@@ -32,8 +32,7 @@
 - (id)initWithCanPopAllItemMenu:(BOOL)can
 {
     self = [super init];
-    if (self)
-    {
+    if (self){
         [self initConfig];
         _canPopAllItemMenu = can;
     }
@@ -43,8 +42,7 @@
 - (id)initWithSubViewControllers:(NSArray *)subViewControllers
 {
     self = [super init];
-    if (self)
-    {
+    if (self){
         [self initConfig];
         _subViewControllers = subViewControllers;
     }
@@ -58,8 +56,7 @@
 - (id)initWithParentViewController:(UIViewController *)viewController containerView:(UIView *)containerView
 {
     self = [super init];
-    if (self)
-    {
+    if (self){
         [self initConfig];
         [self addParentController:viewController containerView:containerView];
     }
@@ -74,8 +71,6 @@
 - (id)initWithSubViewControllers:(NSArray *)subControllers andParentViewController:(UIViewController *)viewController containerView:(UIView *)containerView canPopAllItemMenu:(BOOL)can
 {
     self = [self initWithSubViewControllers:subControllers];
-    
-//    [self initConfig];
     _canPopAllItemMenu = can;
     [self addParentController:viewController containerView:containerView];
     return self;
@@ -145,8 +140,7 @@
 {
     // Load all title of children view controllers
     _titles = [[NSMutableArray alloc] initWithCapacity:_subViewControllers.count];
-    for (UIViewController *viewController in _subViewControllers)
-    {
+    for (UIViewController *viewController in _subViewControllers){
         if( viewController.title == nil ) NSLog(@"error!! controller title is nil.");
         [_titles addObject:viewController.title];
     }
@@ -224,8 +218,7 @@
 {
     // prevent set [UIColor clear], because this set can take error display
     CGFloat red, green, blue, alpha;
-    if ([navTabBarColor getRed:&red green:&green blue:&blue alpha:&alpha] && !red && !green && !blue && !alpha)
-    {
+    if ([navTabBarColor getRed:&red green:&green blue:&blue alpha:&alpha] && !red && !green && !blue && !alpha){
         navTabBarColor = NavTabbarColor;
     }
     _navTabBarColor = navTabBarColor;
@@ -274,6 +267,12 @@
     _constraintNavTabBarHeight.constant = _navTabBarHeight;
 }
 
+- (void)setNavTabBarItemWidth:(float)navTabBarItemWidth
+{
+    _navTabBarItemWidth = navTabBarItemWidth;
+    _navTabBar.itemWidth = _navTabBarItemWidth;
+}
+
 // modify by Gevin ，多一個 container view，因為有可能不是要滿版的，containerView 必須要是 viewController 的
 - (void)addParentController:(UIViewController *)viewController
 {
@@ -285,8 +284,7 @@
     _containerView = containerView;
     // Gevin modify: 如果加這行，會把 SCNavTabBarController 的 parent Controller 的 view 下移
     // Close UIScrollView characteristic on IOS7 and later
-    if ( _containerView == viewController.view && [viewController respondsToSelector:@selector(edgesForExtendedLayout)])
-    {
+    if ( _containerView == viewController.view && [viewController respondsToSelector:@selector(edgesForExtendedLayout)]){
         viewController.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
@@ -335,7 +333,7 @@
     if ( index != _currentIndex ) {
         _currentIndex = index;
         _navTabBar.currentItemIndex = index;
-    }    
+    }
 }
 
 #pragma mark - SCNavTabBarDelegate Methods
@@ -345,20 +343,18 @@
     _currentIndex = index;
     _navTabBar.currentItemIndex = index;
     CGPoint point = CGPointMake(index * SCREEN_WIDTH, DOT_COORDINATE);
-    NSLog(@"tab move to %.0f index %ld", point ,index );
+//    NSLog(@"tab move to %.0f index %ld", point ,index );
     [_mainView setContentOffset:point animated:_scrollAnimation];
 }
 
 - (void)shouldPopNavgationItemMenu:(BOOL)pop height:(CGFloat)height
 {
-    if (pop)
-    {
+    if (pop){
         [UIView animateWithDuration:0.5f animations:^{
             _navTabBar.frame = CGRectMake(_navTabBar.frame.origin.x, _navTabBar.frame.origin.y, _navTabBar.frame.size.width, height + NAV_TAB_BAR_HEIGHT);
         }];
     }
-    else
-    {
+    else{
         [UIView animateWithDuration:0.5f animations:^{
             _navTabBar.frame = CGRectMake(_navTabBar.frame.origin.x, _navTabBar.frame.origin.y, _navTabBar.frame.size.width, NAV_TAB_BAR_HEIGHT);
         }];

@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "SCNavTabBarController"
-  s.version      = "0.1.9"
+  s.version      = "0.1.10"
   s.summary      = "SCNavTabBarController demo is like news client control and manager subviewcontroller"
   s.description  = <<-DESC
                    Fork from original master branch, and my reversion added features autolayout support

@@ -50,6 +50,7 @@
     _textFont = [UIFont systemFontOfSize: 17 ];
     _itemSpace = 30;
     _barHeight = 60;
+    _itemWidth = 0;    // 0 為自動設定，若指定的話，就每個都是這個寬
     
     [self viewConfig];
     [self addTapGestureRecognizer];
@@ -105,8 +106,7 @@
     }
     
     //  設定 item object
-    for (NSInteger index = 0; index < [_itemTitles count]; index++)
-    {
+    for (NSInteger index = 0; index < [_itemTitles count]; index++){
         UIButton *button = _items[index];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], _barHeight);
         //  2016-01-27 Gevin added for textFont
@@ -145,12 +145,17 @@
     
     for (NSString *title in titles)
     {
-        // 2016-01-27 Gevin added for textFont
-        NSDictionary *attributes = @{NSFontAttributeName:_textFont};
-        CGSize size = [title sizeWithAttributes:attributes];
-//        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
-        NSNumber *width = [NSNumber numberWithFloat:size.width + _itemSpace ];
-        [widths addObject:width];
+        if (_itemWidth>0) {
+            [widths addObject:@(_itemWidth)];
+        }
+        else{
+            // 2016-01-27 Gevin added for textFont
+            NSDictionary *attributes = @{NSFontAttributeName:_textFont};
+            CGSize size = [title sizeWithAttributes:attributes];
+    //        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
+            NSNumber *width = [NSNumber numberWithFloat:size.width + _itemSpace ];
+            [widths addObject:width];
+        }
     }
     
     return widths;
@@ -290,6 +295,12 @@
     if ( _itemSpace > -1 ) {
         [self updateData];
     }
+}
+
+- (void)setItemWidth:(float)itemWidth
+{
+    _itemWidth = itemWidth;
+    [self updateData];
 }
 
 - (void)setBarHeight:(float)barHeight

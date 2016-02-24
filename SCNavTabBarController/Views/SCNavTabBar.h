@@ -35,6 +35,7 @@
 @property (nonatomic, assign)   NSInteger   currentItemIndex;           // current selected item's index
 @property (nonatomic, strong)   NSArray     *itemTitles;                // all items' title
 @property (nonatomic)           float       itemSpace;                  // Gevin added, the space between two items
+@property (nonatomic)           float       itemWidth;                  // Gevin added
 @property (nonatomic, strong)   UIColor     *naviColor;                 // Gevin added, assign color to background color is not work, so declare this property to fixed it.
 @property (nonatomic, strong)   UIFont      *textFont;                  // Gevin added
 @property (nonatomic, strong)   UIColor     *textColor;                 // Gevin added
