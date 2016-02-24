@@ -124,14 +124,12 @@
     // Iinitialize value
     _currentIndex = 0;
     _navTabBarColor = _navTabBarColor ? _navTabBarColor : NavTabbarColor;
-    
     // Gevin added
     _dragToSwitchView = YES;
     _showShadow = NO;
     _canPopAllItemMenu = NO;
     _navTabBarTextFont = [UIFont systemFontOfSize:17];
     _navTabBarTextColor = [UIColor darkGrayColor];
-//    _navTabBarSelectedTextColor = [UIColor darkGrayColor];
     _navTabBarHeight = 60;
 }
 
@@ -154,13 +152,10 @@
     _navTabBar = [[SCNavTabBar alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, NAV_TAB_BAR_HEIGHT) canPopAllItemMenu:_canPopAllItemMenu];
     _navTabBar.delegate = self;
     _navTabBar.naviColor = _navTabBarColor;
-    _navTabBar.lineColor = _navTabBarLineColor;
-    _navTabBar.itemTitles = _titles;
     _navTabBar.textColor = _navTabBarTextColor;
-    _navTabBar.selectedTextColor = nil;
+    _navTabBar.itemTitles = _titles;
     _navTabBar.arrowImage = _navTabBarArrowImage;
-    _navTabBar.showShadow = _showShadow; // Gevin added
-    [_navTabBar updateData];
+    [_navTabBar updateItemLayout];
     
     _mainView = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, _navTabBar.frame.origin.y + _navTabBar.frame.size.height, SCREEN_WIDTH, SCREEN_HEIGHT - _navTabBar.frame.origin.y - _navTabBar.frame.size.height - STATUS_BAR_HEIGHT - _navTabBar.barHeight )];
     _mainView.delegate = self;
