@@ -169,6 +169,8 @@
         cnt = (int)_subViewControllers.count;
     }
     _mainView.contentSize = CGSizeMake(SCREEN_WIDTH * cnt , DOT_COORDINATE);
+    UIView *emptyView = [[UIView alloc] init];
+    [self.view addSubview:emptyView]; // for self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_mainView];
     [self.view addSubview:_navTabBar];
     
