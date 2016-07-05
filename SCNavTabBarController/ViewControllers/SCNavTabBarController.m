@@ -20,6 +20,10 @@
     
     NSLayoutConstraint *_constraintNavTabBarHeight;
     
+    BOOL runDrag;
+    CGPoint dragStartPoint;
+    NSInteger nextIndex;
+    int preOffsetVector;
 }
 
 @end
@@ -312,25 +316,98 @@
 #pragma mark - Scroll View Delegate Methods
 #pragma mark -
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    NSInteger index = (NSInteger)( _mainView.contentOffset.x/SCREEN_WIDTH);
-//    NSLog(@"offset x %f , index %ld", _mainView.contentOffset.x, index);
-////    if ( index != _currentIndex ) {
-////        _currentIndex = index;
-////        _navTabBar.currentItemIndex = index;
-////    }
-//}
+
+// called on start of dragging (may require some time and or distance to move)
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    runDrag = YES;
+    dragStartPoint = scrollView.contentOffset;
+    preOffsetVector = 0;
+    NSLog(@"dragStartPoint %@", NSStringFromCGPoint( dragStartPoint));
+    //  如果還在跑動畫，就停止
+    if ( [_navTabBar isFocusBarAnimated] ) {
+        [_navTabBar stopFocusBarAnimation];
+    }
+}
+
+//  拖曳中呼叫
+//  注意：即使手放開了，scroll view 還是會自動拖到定位，這期間還是會呼叫這個 function，並不是你手指 touch 拖曳才會呼叫
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if ( runDrag ) {
+    
+        NSInteger index = dragStartPoint.x / SCREEN_WIDTH;
+        
+        //  計算偏移量
+        float offset = scrollView.contentOffset.x - dragStartPoint.x;
+        //  計算偏移方向
+        int offsetVector = (int)(offset / fabsf(offset));
+        
+        //  依偏移方向，決定要移去的目標
+        //  move right
+        if ( offsetVector > 0 ) {
+            if ( index >= _navTabBar.itemTitles.count - 1) {
+                return;
+            }
+            nextIndex = index + 1;
+        }
+        //  move left
+        else{
+            if ( index <= 0 ) {
+                return;
+            }
+            nextIndex = index - 1;
+            
+        }
+        
+        //  如果原本的偏移方向不一樣，那動畫的方向就要變
+        if ( preOffsetVector == 0 || preOffsetVector != offsetVector ) {
+            preOffsetVector = offsetVector;
+            //  duration 用 0.7秒，是因為目測後，最接近 scrollView 自動捲動的動畫的速度
+            [_navTabBar setFocusBarAnimationToIndex:nextIndex duratioin:0.7f];
+            NSLog(@"start !!");
+        }
+        
+        //  設定時間偏移量
+        float t = fabsf( offset / SCREEN_WIDTH );
+        NSLog(@"offset:%f, index:%ld nextIndex:%ld, preVector:%d, t:%f",offset, index, (long)nextIndex, preOffsetVector, t );
+        [_navTabBar setFocusBarTimeOffset: t ];
+        
+        //    NSLog(@"offset x %f , index %ld", _mainView.contentOffset.x, index);
+        //    if ( index != _currentIndex ) {
+        //        _currentIndex = index;
+        //        _navTabBar.currentItemIndex = index;
+        //    }
+
+    }
+}
+
+//  手放開時呼叫
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    
+    runDrag = NO;
+    NSInteger targetIndex = targetContentOffset->x / SCREEN_WIDTH;
+    float t = 0.7f * ( fabsf( scrollView.contentOffset.x - targetContentOffset->x ) / SCREEN_WIDTH );
+    [_navTabBar setFocusBarAnimationToIndex:targetIndex duratioin:t];
+    [_navTabBar startFocusBarAnimation];
+}
+
 
 //  停止滑動時呼叫
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+//    runDrag = NO;
+    NSLog(@"Decelerating !!");
     NSInteger index = (NSInteger)( _mainView.contentOffset.x/SCREEN_WIDTH);
-//    NSLog(@"offset x %f , index %ld >> end", _mainView.contentOffset.x, index);
+    NSLog(@"offset x %f , index %ld >> end", _mainView.contentOffset.x, index);
     if ( index != _currentIndex ) {
+        NSLog(@"change index !!");
         _currentIndex = index;
         _navTabBar.currentItemIndex = index;
     }
+    
+//    [_navTabBar performSelector:@selector(stopFocusBarAnimation) withObject:nil afterDelay:0.1];
 }
 
 #pragma mark - SCNavTabBarDelegate Methods
@@ -338,7 +415,7 @@
 - (void)itemDidSelectedWithIndex:(NSInteger)index
 {
     _currentIndex = index;
-    _navTabBar.currentItemIndex = index;
+//    _navTabBar.currentItemIndex = index;
     CGPoint point = CGPointMake(index * SCREEN_WIDTH, DOT_COORDINATE);
 //    NSLog(@"tab move to %.0f index %ld", point ,index );
     [_mainView setContentOffset:point animated:_scrollAnimation];

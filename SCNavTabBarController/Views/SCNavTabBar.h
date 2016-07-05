@@ -65,4 +65,18 @@
  */
 - (void)refresh;
 
+- (void)setFocusBarAnimationToIndex:(NSInteger)destIndex duratioin:(float)duration;
+
+- (void)startFocusBarAnimation;
+
+- (void)pauseFocusBarAnimation;
+
+- (void)stopFocusBarAnimation;
+
+- (BOOL)isFocusBarAnimated;
+
+//   0 ~ 1
+- (void)setFocusBarTimeOffset:(float)offset;
+
+
 @end
