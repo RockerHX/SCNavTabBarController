@@ -18,10 +18,13 @@
     UIView          *_line;                 // underscore show which item selected
     SCPopView       *_popView;              // when item menu, will show this view
     
-    NSMutableArray  *_items;                // SCNavTabBar pressed item
-    NSArray         *_itemsWidth;           // an array of items' width
+    NSMutableArray  *_itemButtons;                // SCNavTabBar pressed item
+    NSArray         *_itemButtonsWidths;           // an array of items' width
     BOOL            _canPopAllItemMenu;     // is showed arrow button
     BOOL            _popItemMenu;           // is needed pop item menu
+    
+    NSInteger       _nextIndex;             // for focus bar animation
+    float           _animationDuration;     // for focus bar animation
 }
 
 @end
@@ -45,7 +48,7 @@
 - (void)initConfig
 {
     _lineHeight = 3.0f; // gevin added
-    _items = [@[] mutableCopy];
+    _itemButtons = [@[] mutableCopy];
     _naviColor = NavTabbarColor;
     _arrowImage = [UIImage imageNamed:SCNavTabbarSourceName(@"arrow.png")];
     _textFont = [UIFont systemFontOfSize: 17 ];
@@ -90,22 +93,10 @@
 
 - (CGFloat)configTabbarItems:(NSArray *)widths
 {
-//    // 2016-01-27 Gevin added for textFont
-//    //  建立 item object，每個物件只執行一次
-//    if ( _items.count < _itemTitles.count ) {
-//        NSInteger start = _items.count;
-//        for (NSInteger index = start; index < [_itemTitles count]; index++) {
-//            UIButton *button = button = [UIButton buttonWithType:UIButtonTypeCustom];
-//            [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
-//            [_navgationTabBar addSubview:button];
-//            [_items addObject:button];
-//        }
-//    }
-    
     CGFloat buttonX = DOT_COORDINATE;
     //  設定 item object
     for (NSInteger index = 0; index < [_itemTitles count]; index++){
-        UIButton *button = _items[index];
+        UIButton *button = _itemButtons[index];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], _barHeight);
         //  2016-01-27 Gevin added for textFont
         button.titleLabel.font = _textFont;
@@ -121,7 +112,16 @@
 /** Gevin note 2015-04-23 tabbar item 被按到時觸發 */
 - (void)itemPressed:(UIButton *)button
 {
-    NSInteger index = [_items indexOfObject:button];
+    NSInteger index = [_itemButtons indexOfObject:button];
+    
+    //  移動 focus bar
+    [self setFocusBarAnimationToIndex:index duratioin:0.7f];
+    [self startFocusBarAnimation];
+
+    //  變換 index
+    [self setCurrentItemIndex: index ];
+    
+    //  通知 delegate
     [_delegate itemDidSelectedWithIndex:index];
 }
 
@@ -131,7 +131,7 @@
     [_delegate shouldPopNavgationItemMenu:_popItemMenu height:[self popMenuHeight]];
 }
 
-- (NSArray *)getButtonsWidthWithTitles:(NSArray *)titles;
+- (NSArray *)calculateButtonsWidthWithTitles:(NSArray *)titles;
 {
     NSMutableArray *widths = [@[] mutableCopy];
     
@@ -164,12 +164,12 @@
     CGFloat buttonX = DOT_COORDINATE;
     CGFloat buttonY = ITEM_HEIGHT;
     CGFloat maxHeight = SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - NAV_TAB_BAR_HEIGHT;
-    for (NSInteger index = 0; index < [_itemsWidth count]; index++)
+    for (NSInteger index = 0; index < [_itemButtonsWidths count]; index++)
     {
-        buttonX += [_itemsWidth[index] floatValue];
+        buttonX += [_itemButtonsWidths[index] floatValue];
         
         @try {
-            if ((buttonX + [_itemsWidth[index + 1] floatValue]) >= SCREEN_WIDTH)
+            if ((buttonX + [_itemButtonsWidths[index + 1] floatValue]) >= SCREEN_WIDTH)
             {
                 buttonX = DOT_COORDINATE;
                 buttonY += ITEM_HEIGHT;
@@ -232,7 +232,7 @@
 // Gevin added
 - (void)setTextColor:(UIColor *)textColor{
     _textColor = textColor;
-    for (UIButton* button in _items ) {
+    for (UIButton* button in _itemButtons ) {
         [button setTitleColor: _textColor?_textColor:[UIColor blackColor] forState:UIControlStateNormal ];
     }
 }
@@ -241,7 +241,7 @@
 - (void)setSelectedTextColor:(UIColor *)selectedTextColor{
     _selectedTextColor = selectedTextColor;
     if (_selectedTextColor) {
-        for (UIButton* button in _items ) {
+        for (UIButton* button in _itemButtons ) {
             [button setTitleColor: _selectedTextColor forState:UIControlStateSelected ];
         }
     }
@@ -276,7 +276,7 @@
 - (void)setTextFont:(UIFont *)textFont
 {
     _textFont = textFont;
-    if ( _items.count > 0 ) {
+    if ( _itemButtons.count > 0 ) {
         [self updateItemLayout];
     }
 }
@@ -314,25 +314,26 @@
 {
     _itemTitles = itemTitles;
     
-    if ( _items.count < _itemTitles.count ) {
-        NSInteger start = _items.count;
+    if ( _itemButtons.count < _itemTitles.count ) {
+        NSInteger start = _itemButtons.count;
         for (NSInteger index = start; index < [_itemTitles count]; index++) {
             UIButton *button = button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
             [_navgationTabBar addSubview:button];
-            [_items addObject:button];
+            [_itemButtons addObject:button];
         }
     }
 }
 
 - (void)setCurrentItemIndex:(NSInteger)currentItemIndex
 {
+    
     // Gevin added 2105-11-4 selected text color
-    UIButton *prebutton = _items[_currentItemIndex];
+    UIButton *prebutton = _itemButtons[_currentItemIndex];
     prebutton.selected = NO;
     
     _currentItemIndex = currentItemIndex;
-    UIButton *button = _items[currentItemIndex];
+    UIButton *button = _itemButtons[currentItemIndex];
     button.selected = YES;
     CGFloat flag = _canPopAllItemMenu ? (SCREEN_WIDTH - ARROW_BUTTON_WIDTH) : SCREEN_WIDTH;
     
@@ -350,12 +351,6 @@
     {
         [_navgationTabBar setContentOffset:CGPointMake(DOT_COORDINATE, DOT_COORDINATE) animated:YES];
     }
-    
-    // Gevin note 2015-04-23 移動底線，原本的放在 - (void)setCurrentItemIndex:(NSInteger)currentItemIndex，會有問題
-    // Gevin note 2015-07-28 移動底線，又改回原本的地方
-    [UIView animateWithDuration:0.2f animations:^{
-        _line.frame = CGRectMake(button.frame.origin.x + 2.0f, _line.frame.origin.y, [_itemsWidth[_currentItemIndex] floatValue] - 4.0f, _line.frame.size.height);
-    }];
 }
 
 //  call by SCNavTabBarController
@@ -363,17 +358,17 @@
 {
     _arrowButton.backgroundColor = self.backgroundColor;
     //  計算 button width
-    _itemsWidth = [self getButtonsWidthWithTitles:_itemTitles];
-    if (_itemsWidth.count)
+    _itemButtonsWidths = [self calculateButtonsWidthWithTitles:_itemTitles];
+    if (_itemButtonsWidths.count)
     {
         // 設定線寬及顏色
         // 取目前選取的 item 寬，做為線的寬
         [_navgationTabBar bringSubviewToFront:_line];
-        float width = [_itemsWidth[_currentItemIndex] floatValue];
+        float width = [_itemButtonsWidths[_currentItemIndex] floatValue];
         _line.frame = CGRectMake(2.0f, _barHeight - _lineHeight, width - 4.0f, _lineHeight );
         _line.backgroundColor = _lineColor;
         
-        CGFloat contentWidth = [self configTabbarItems:_itemsWidth];
+        CGFloat contentWidth = [self configTabbarItems:_itemButtonsWidths];
         _navgationTabBar.contentSize = CGSizeMake(contentWidth, DOT_COORDINATE);
     }
 }
@@ -389,6 +384,116 @@
 {
     [self functionButtonPressed];
     [_delegate itemDidSelectedWithIndex:index];
+}
+
+
+#pragma mark - LineBar Animation
+#pragma mark -
+
+
+- (void)setFocusBarAnimationToIndex:(NSInteger)destIndex duratioin:(float)duration
+{
+    if ( [self isFocusBarAnimated] ) {
+        [self stopFocusBarAnimation];
+    }
+    _animationDuration = duration;
+    _nextIndex = destIndex;
+//    UIButton *item1 = _itemButtons[_currentItemIndex];
+    UIButton *item2 = _itemButtons[destIndex];
+//    CGRect currentFrame = item1.frame;
+//    CGRect finalFrame = item2.frame;
+    
+    
+    CABasicAnimation * baseAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+    baseAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]; 
+    baseAnimation.fromValue = [NSValue valueWithCGPoint:_line.center] ; 
+    baseAnimation.toValue = [NSValue valueWithCGPoint:(CGPoint){item2.center.x,_line.center.y}] ;
+//    NSLog(@"position from:%@ to:%@", NSStringFromCGPoint( _line.center), NSStringFromCGPoint((CGPoint){item2.center.x,_line.center.y}));
+    
+    CABasicAnimation * boundsAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    
+    boundsAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]; 
+    boundsAnimation.fromValue = [NSValue valueWithCGRect:_line.bounds] ;
+    boundsAnimation.toValue = [NSValue valueWithCGRect:(CGRect){item2.frame.origin, item2.frame.size.width - 4, _lineHeight }] ;
+//    NSLog(@"bounds from:%@ to:%@", NSStringFromCGRect(_line.bounds), NSStringFromCGRect((CGRect){item2.frame.origin, item2.frame.size.width - 4, _lineHeight }));
+    
+    CAAnimationGroup * group =[CAAnimationGroup animation];
+    // making animation does not reset after completed
+    group.removedOnCompletion=NO;
+    group.fillMode=kCAFillModeForwards;
+    
+    group.animations =[NSArray arrayWithObjects:baseAnimation, boundsAnimation, nil];    
+    group.duration = duration;
+    group.delegate = self;
+
+//    [_line.layer removeAllAnimations];
+    [_line.layer addAnimation:group forKey:@"frame"];     
+    _line.layer.speed = 0; // default 1
+    _line.layer.timeOffset = 0;
+}
+
+- (void)startFocusBarAnimation
+{
+    _line.layer.speed = 1;
+}
+
+- (void)pauseFocusBarAnimation
+{
+    _line.layer.speed = 0;
+}
+
+- (void)stopFocusBarAnimation
+{
+//    UIButton *item = _itemButtons[_currentItemIndex];
+//    CGPoint center = (CGPoint){item.center.x,_line.center.y};
+//    CGRect frame = (CGRect){item.frame.origin, item.frame.size.width - 4, _lineHeight };
+//    _line.frame = frame;
+//    _line.center = center;
+    //  動畫播放時，真正在變換值的 layer 是 layer.presentationLayer
+    CGPoint position = ((CALayer*)_line.layer.presentationLayer).position;
+    CGRect bounds = ((CALayer*)_line.layer.presentationLayer).bounds;
+    _line.frame = bounds;
+    _line.center = position;
+    
+    [_line.layer removeAllAnimations];
+}
+
+//   0 ~ 1
+- (void)setFocusBarTimeOffset:(float)offset
+{
+    _line.layer.timeOffset = _animationDuration * ( offset / 1.0f );
+}
+
+- (BOOL)isFocusBarAnimated
+{
+    CAAnimation *animation = [_line.layer animationForKey:@"frame"];
+    return animation ? YES:NO;
+}
+
+//  animation delegate
+//  動畫播放結束，或是從 layer 移除的時候會呼叫
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag
+{
+    NSLog(@"animation finish:%d", flag );
+    //  動畫跑完後，_line 的實際位置並沒有真的改變，這個動畫就真的只是個動畫而已
+    //  所以動畫結束後必須再自己設定到目標位置
+    CGPoint position = ((CALayer*)_line.layer.presentationLayer).position;
+    CGRect bounds = ((CALayer*)_line.layer.presentationLayer).bounds;
+    _line.frame = bounds;
+    _line.center = position;
+//    if ( flag ) {   // 動畫真的跑到結束的地方才停止
+//        UIButton *item = _itemButtons[_currentItemIndex];
+//        
+//        CGPoint center = (CGPoint){item.center.x,_line.center.y};
+//        CGRect frame = (CGRect){item.frame.origin, item.frame.size.width - 4, _lineHeight };
+//        
+//        _line.frame = frame;
+//        _line.center = center;
+//    }
+//    else{   //  動畫停止的時候，沒有跑到結束的地方
+////        _line.frame = 
+//    }
+    
 }
 
 @end
