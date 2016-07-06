@@ -388,7 +388,7 @@
     
     runDrag = NO;
     NSInteger targetIndex = targetContentOffset->x / SCREEN_WIDTH;
-    float t = 0.7f * ( fabsf( scrollView.contentOffset.x - targetContentOffset->x ) / SCREEN_WIDTH );
+    float t = 0.3f * ( fabsf( scrollView.contentOffset.x - targetContentOffset->x ) / SCREEN_WIDTH );
     [_navTabBar setFocusBarAnimationToIndex:targetIndex duratioin:t];
     [_navTabBar startFocusBarAnimation];
 }
