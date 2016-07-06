@@ -115,7 +115,7 @@
     NSInteger index = [_itemButtons indexOfObject:button];
     
     //  移動 focus bar
-    [self setFocusBarAnimationToIndex:index duratioin:0.7f];
+    [self setFocusBarAnimationToIndex:index duratioin:0.3f];
     [self startFocusBarAnimation];
 
     //  變換 index

@@ -363,8 +363,8 @@
         //  如果原本的偏移方向不一樣，那動畫的方向就要變
         if ( preOffsetVector == 0 || preOffsetVector != offsetVector ) {
             preOffsetVector = offsetVector;
-            //  duration 用 0.7秒，是因為目測後，最接近 scrollView 自動捲動的動畫的速度
-            [_navTabBar setFocusBarAnimationToIndex:nextIndex duratioin:0.7f];
+            //  duration 用 0.3秒，是因為目測後，最接近 scrollView 自動捲動的動畫的速度
+            [_navTabBar setFocusBarAnimationToIndex:nextIndex duratioin:0.3f];
             NSLog(@"start !!");
         }
         
