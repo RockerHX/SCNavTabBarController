@@ -323,7 +323,7 @@
     runDrag = YES;
     dragStartPoint = scrollView.contentOffset;
     preOffsetVector = 0;
-    NSLog(@"dragStartPoint %@", NSStringFromCGPoint( dragStartPoint));
+//    NSLog(@"dragStartPoint %@", NSStringFromCGPoint( dragStartPoint));
     //  如果還在跑動畫，就停止
     if ( [_navTabBar isFocusBarAnimated] ) {
         [_navTabBar stopFocusBarAnimation];
@@ -365,12 +365,12 @@
             preOffsetVector = offsetVector;
             //  duration 用 0.3秒，是因為目測後，最接近 scrollView 自動捲動的動畫的速度
             [_navTabBar setFocusBarAnimationToIndex:nextIndex duratioin:0.3f];
-            NSLog(@"start !!");
+//            NSLog(@"start !!");
         }
         
         //  設定時間偏移量
         float t = fabsf( offset / SCREEN_WIDTH );
-        NSLog(@"offset:%f, index:%ld nextIndex:%ld, preVector:%d, t:%f",offset, index, (long)nextIndex, preOffsetVector, t );
+//        NSLog(@"offset:%f, index:%ld nextIndex:%ld, preVector:%d, t:%f",offset, index, (long)nextIndex, preOffsetVector, t );
         [_navTabBar setFocusBarTimeOffset: t ];
         
         //    NSLog(@"offset x %f , index %ld", _mainView.contentOffset.x, index);
@@ -398,11 +398,11 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 //    runDrag = NO;
-    NSLog(@"Decelerating !!");
+//    NSLog(@"Decelerating !!");
     NSInteger index = (NSInteger)( _mainView.contentOffset.x/SCREEN_WIDTH);
-    NSLog(@"offset x %f , index %ld >> end", _mainView.contentOffset.x, index);
+//    NSLog(@"offset x %f , index %ld >> end", _mainView.contentOffset.x, index);
     if ( index != _currentIndex ) {
-        NSLog(@"change index !!");
+//        NSLog(@"change index !!");
         _currentIndex = index;
         _navTabBar.currentItemIndex = index;
     }
