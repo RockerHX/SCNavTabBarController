@@ -419,6 +419,11 @@
     CGPoint point = CGPointMake(index * SCREEN_WIDTH, DOT_COORDINATE);
 //    NSLog(@"tab move to %.0f index %ld", point ,index );
     [_mainView setContentOffset:point animated:_scrollAnimation];
+    
+    if( self.delegate ){
+        UIViewController *controller = _subViewControllers[_currentIndex];
+        [self.delegate viewController:controller didSelectedTabIndex:_currentIndex];
+    }
 }
 
 - (void)shouldPopNavgationItemMenu:(BOOL)pop height:(CGFloat)height

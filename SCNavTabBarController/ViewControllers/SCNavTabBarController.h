@@ -10,12 +10,19 @@
 
 @class SCNavTabBar;
 
+@protocol SCNavTabBarControllerDelegate <NSObject>
+
+- (void)viewController:(UIViewController*)controller didSelectedTabIndex:(NSInteger)index;
+
+@end
+
+
 @interface SCNavTabBarController : UIViewController
 
 @property (nonatomic, assign)   BOOL        canPopAllItemMenu;          // Default value: YES
 @property (nonatomic, assign)   BOOL        scrollAnimation;            // Default value: NO
 @property (nonatomic, assign)   BOOL        mainViewBounces;            // Default value: NO
-@property (nonatomic, assign)   BOOL        dragToSwitchView;            // Default value: YES // 2015-03-09 Gevin Added
+@property (nonatomic, assign)   BOOL        dragToSwitchView;           // Default value: YES // 2015-03-09 Gevin Added
 
 @property (nonatomic, strong)   NSArray     *subViewControllers;        // An array of children view controllers
 
@@ -31,6 +38,7 @@
 @property (nonatomic)           float       navTabBarItemSpace;         // Gevin added
 @property (nonatomic)           float       navTabBarHeight;            // Gevin added
 @property (nonatomic)           float       navTabBarItemWidth;         // Gevin added, default 0, if value is 0, the item width auto calculate 
+@property (nonatomic)           id<SCNavTabBarControllerDelegate> delegate;                   // Gevin added
 
 /**
  *  Initialize Methods
