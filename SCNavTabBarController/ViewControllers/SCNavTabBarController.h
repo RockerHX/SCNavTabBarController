@@ -38,7 +38,7 @@
 @property (nonatomic)           float       navTabBarItemSpace;         // Gevin added
 @property (nonatomic)           float       navTabBarHeight;            // Gevin added
 @property (nonatomic)           float       navTabBarItemWidth;         // Gevin added, default 0, if value is 0, the item width auto calculate 
-@property (nonatomic)           id<SCNavTabBarControllerDelegate> delegate;                   // Gevin added
+@property (nonatomic)           id<SCNavTabBarControllerDelegate> delegate; // Gevin added
 
 /**
  *  Initialize Methods

@@ -401,10 +401,15 @@
 //    NSLog(@"Decelerating !!");
     NSInteger index = (NSInteger)( _mainView.contentOffset.x/SCREEN_WIDTH);
 //    NSLog(@"offset x %f , index %ld >> end", _mainView.contentOffset.x, index);
+    // 切換 index
     if ( index != _currentIndex ) {
 //        NSLog(@"change index !!");
         _currentIndex = index;
         _navTabBar.currentItemIndex = index;
+        if( self.delegate ){
+            UIViewController *controller = _subViewControllers[_currentIndex];
+            [self.delegate viewController:controller didSelectedTabIndex:_currentIndex];
+        }
     }
     
 //    [_navTabBar performSelector:@selector(stopFocusBarAnimation) withObject:nil afterDelay:0.1];
