@@ -7,32 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		481EFB661A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 481EFB651A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m */; };
 		4841AF451A1A2941001308F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF441A1A2941001308F7 /* main.m */; };
 		4841AF481A1A2941001308F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF471A1A2941001308F7 /* AppDelegate.m */; };
 		4841AF4B1A1A2941001308F7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841AF4A1A1A2941001308F7 /* ViewController.m */; };
 		4841AF4E1A1A2941001308F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4841AF4C1A1A2941001308F7 /* Main.storyboard */; };
 		4841AF501A1A2941001308F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4841AF4F1A1A2941001308F7 /* Images.xcassets */; };
-		4841AF531A1A2941001308F7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4841AF511A1A2941001308F7 /* LaunchScreen.xib */; };
 		48D07A211A1BEA5400425406 /* SCNavTabBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48D07A181A1BEA5400425406 /* SCNavTabBar.bundle */; };
 		48D07A221A1BEA5400425406 /* SCNavTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D07A1B1A1BEA5400425406 /* SCNavTabBarController.m */; };
 		48D07A231A1BEA5400425406 /* SCNavTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D07A1E1A1BEA5400425406 /* SCNavTabBar.m */; };
 		48D07A241A1BEA5400425406 /* SCPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D07A201A1BEA5400425406 /* SCPopView.m */; };
 		EEC82F961CB79DE2001CE693 /* SCNavTabBarController.podspec in Resources */ = {isa = PBXBuildFile; fileRef = EEC82F951CB79DE2001CE693 /* SCNavTabBarController.podspec */; };
+		F6E6B47A1DA67B190042E51B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6E6B4791DA67B190042E51B /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4841AF591A1A2942001308F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4841AF371A1A2941001308F7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4841AF3E1A1A2941001308F7;
-			remoteInfo = SCNavTabbarDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		481EFB651A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNavTabBarControllerDemoTests.m; sourceTree = "<group>"; };
 		4841AF3F1A1A2941001308F7 /* SCNavTabbarDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCNavTabbarDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4841AF431A1A2941001308F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4841AF441A1A2941001308F7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,9 +30,6 @@
 		4841AF4A1A1A2941001308F7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4841AF4D1A1A2941001308F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4841AF4F1A1A2941001308F7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4841AF521A1A2941001308F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		4841AF581A1A2942001308F7 /* SCNavTabbarDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCNavTabbarDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4841AF5D1A1A2942001308F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48D07A171A1BEA5400425406 /* CommonMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMacro.h; sourceTree = "<group>"; };
 		48D07A181A1BEA5400425406 /* SCNavTabBar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SCNavTabBar.bundle; sourceTree = "<group>"; };
 		48D07A1A1A1BEA5400425406 /* SCNavTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNavTabBarController.h; sourceTree = "<group>"; };
@@ -54,17 +39,11 @@
 		48D07A1F1A1BEA5400425406 /* SCPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPopView.h; sourceTree = "<group>"; };
 		48D07A201A1BEA5400425406 /* SCPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPopView.m; sourceTree = "<group>"; };
 		EEC82F951CB79DE2001CE693 /* SCNavTabBarController.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SCNavTabBarController.podspec; sourceTree = SOURCE_ROOT; };
+		F6E6B4791DA67B190042E51B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4841AF3C1A1A2941001308F7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4841AF551A1A2942001308F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -77,8 +56,8 @@
 		4841AF361A1A2941001308F7 = {
 			isa = PBXGroup;
 			children = (
+				F6E6B4791DA67B190042E51B /* Default-568h@2x.png */,
 				4841AF411A1A2941001308F7 /* SCNavTabBarControllerDemo */,
-				4841AF5B1A1A2942001308F7 /* SCNavTabBarControllerDemoTests */,
 				4841AF401A1A2941001308F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				4841AF3F1A1A2941001308F7 /* SCNavTabbarDemo.app */,
-				4841AF581A1A2942001308F7 /* SCNavTabbarDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,7 +80,6 @@
 				4841AF4A1A1A2941001308F7 /* ViewController.m */,
 				4841AF4C1A1A2941001308F7 /* Main.storyboard */,
 				4841AF4F1A1A2941001308F7 /* Images.xcassets */,
-				4841AF511A1A2941001308F7 /* LaunchScreen.xib */,
 				4841AF421A1A2941001308F7 /* Supporting Files */,
 			);
 			name = SCNavTabBarControllerDemo;
@@ -115,24 +92,6 @@
 				EEC82F951CB79DE2001CE693 /* SCNavTabBarController.podspec */,
 				4841AF431A1A2941001308F7 /* Info.plist */,
 				4841AF441A1A2941001308F7 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4841AF5B1A1A2942001308F7 /* SCNavTabBarControllerDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				4841AF5C1A1A2942001308F7 /* Supporting Files */,
-				481EFB651A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m */,
-			);
-			name = SCNavTabBarControllerDemoTests;
-			path = SCNavTabbarDemoTests;
-			sourceTree = "<group>";
-		};
-		4841AF5C1A1A2942001308F7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4841AF5D1A1A2942001308F7 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -188,39 +147,17 @@
 			productReference = 4841AF3F1A1A2941001308F7 /* SCNavTabbarDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4841AF571A1A2942001308F7 /* SCNavTabbarDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4841AF651A1A2942001308F7 /* Build configuration list for PBXNativeTarget "SCNavTabbarDemoTests" */;
-			buildPhases = (
-				4841AF541A1A2942001308F7 /* Sources */,
-				4841AF551A1A2942001308F7 /* Frameworks */,
-				4841AF561A1A2942001308F7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4841AF5A1A1A2942001308F7 /* PBXTargetDependency */,
-			);
-			name = SCNavTabbarDemoTests;
-			productName = SCNavTabbarDemoTests;
-			productReference = 4841AF581A1A2942001308F7 /* SCNavTabbarDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4841AF371A1A2941001308F7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = SCNavTabbarDemo;
 				TargetAttributes = {
 					4841AF3E1A1A2941001308F7 = {
 						CreatedOnToolsVersion = 6.1;
-					};
-					4841AF571A1A2942001308F7 = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 4841AF3E1A1A2941001308F7;
 					};
 				};
 			};
@@ -238,7 +175,6 @@
 			projectRoot = "";
 			targets = (
 				4841AF3E1A1A2941001308F7 /* SCNavTabbarDemo */,
-				4841AF571A1A2942001308F7 /* SCNavTabbarDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,15 +187,8 @@
 				4841AF4E1A1A2941001308F7 /* Main.storyboard in Resources */,
 				48D07A211A1BEA5400425406 /* SCNavTabBar.bundle in Resources */,
 				EEC82F961CB79DE2001CE693 /* SCNavTabBarController.podspec in Resources */,
-				4841AF531A1A2941001308F7 /* LaunchScreen.xib in Resources */,
+				F6E6B47A1DA67B190042E51B /* Default-568h@2x.png in Resources */,
 				4841AF501A1A2941001308F7 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4841AF561A1A2942001308F7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,23 +208,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4841AF541A1A2942001308F7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				481EFB661A1E1D15005A9E42 /* SCNavTabBarControllerDemoTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4841AF5A1A1A2942001308F7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4841AF3E1A1A2941001308F7 /* SCNavTabbarDemo */;
-			targetProxy = 4841AF591A1A2942001308F7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4841AF4C1A1A2941001308F7 /* Main.storyboard */ = {
@@ -304,14 +217,6 @@
 				4841AF4D1A1A2941001308F7 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		4841AF511A1A2941001308F7 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4841AF521A1A2941001308F7 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -337,6 +242,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -351,7 +257,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -386,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -399,8 +305,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Xiao Baotong (CTJ684EEY5)";
 				INFOPLIST_FILE = SCNavTabbarDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.LianYinTest.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "E36A3204-2221-4822-8F79-59CD1D2B9CFF";
 			};
@@ -412,44 +319,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Xiao Baotong (CTJ684EEY5)";
 				INFOPLIST_FILE = SCNavTabbarDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.LianYinTest.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "E36A3204-2221-4822-8F79-59CD1D2B9CFF";
-			};
-			name = Release;
-		};
-		4841AF661A1A2942001308F7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SCNavTabbarDemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SCNavTabbarDemo.app/SCNavTabbarDemo";
-			};
-			name = Debug;
-		};
-		4841AF671A1A2942001308F7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SCNavTabbarDemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SCNavTabbarDemo.app/SCNavTabbarDemo";
 			};
 			name = Release;
 		};
@@ -470,15 +344,6 @@
 			buildConfigurations = (
 				4841AF631A1A2942001308F7 /* Debug */,
 				4841AF641A1A2942001308F7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4841AF651A1A2942001308F7 /* Build configuration list for PBXNativeTarget "SCNavTabbarDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4841AF661A1A2942001308F7 /* Debug */,
-				4841AF671A1A2942001308F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

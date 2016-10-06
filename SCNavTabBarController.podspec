@@ -11,11 +11,12 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/DonYang/SCNavTabBarController"
   s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author       = { "shicang1990" => "shicang1990@gmail.com" }
-  s.platform     = :ios, '7.0'
-  s.source       = { :git => "https://github.com/DonYang/SCNavTabBarController.git" }
+  s.platform     = :ios
+  s.ios.deployment_target = '7.0'
+  s.source       = { :git => "https://github.com/DonYang/SCNavTabBarController.git", :tag=>s.version.to_s}
+  s.requires_arc = true
   s.source_files  = 'SCNavTabBarController/**/*.{h,m}'
   s.resources = "SCNavTabBarController/*.bundle"
   s.framework  = "Foundation", "UIKit"
-  s.requires_arc = true
 
 end
