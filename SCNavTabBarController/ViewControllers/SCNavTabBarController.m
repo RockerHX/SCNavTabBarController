@@ -369,7 +369,7 @@
         }
         
         //  設定時間偏移量
-        float t = fabsf( offset / SCREEN_WIDTH );
+        float t = fabs( offset / SCREEN_WIDTH );
 //        NSLog(@"offset:%f, index:%ld nextIndex:%ld, preVector:%d, t:%f",offset, index, (long)nextIndex, preOffsetVector, t );
         [_navTabBar setFocusBarTimeOffset: t ];
         
@@ -388,7 +388,7 @@
     
     runDrag = NO;
     NSInteger targetIndex = targetContentOffset->x / SCREEN_WIDTH;
-    float t = 0.3f * ( fabsf( scrollView.contentOffset.x - targetContentOffset->x ) / SCREEN_WIDTH );
+    float t = 0.3f * ( fabs( scrollView.contentOffset.x - targetContentOffset->x ) / SCREEN_WIDTH );
     [_navTabBar setFocusBarAnimationToIndex:targetIndex duratioin:t];
     [_navTabBar startFocusBarAnimation];
 }
