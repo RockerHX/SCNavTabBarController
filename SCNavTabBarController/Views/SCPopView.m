@@ -19,8 +19,11 @@
     
     for (NSString *title in titles)
     {
-        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
-        NSNumber *width = [NSNumber numberWithFloat:size.width + 40.0f];
+//        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
+        CGSize size = [title sizeWithAttributes:
+                       @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+        CGSize adjustedSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
+        NSNumber *width = [NSNumber numberWithFloat:adjustedSize.width + 40.0f];
         [widths addObject:width];
     }
     
