@@ -57,14 +57,16 @@
 
     NSArray *vcs  = @[oneViewController, twoViewController, threeViewController, fourViewController, fiveViewController, sixViewController, sevenViewController, eightViewController, ninghtViewController];
     
-    SCNavTabBarController *navTabBarController = [[SCNavTabBarController alloc] initWithSubViewControllers:vcs andParentViewController:self canPopAllItemMenu:NO];
-    navTabBarController.navTabBarColor = [UIColor colorWithRed:0.5 green:0.5 blue:1 alpha:1];
-    navTabBarController.navTabBarSelectedTextColor = [UIColor colorWithRed:0.8 green:0.5 blue:0.5 alpha:1];
-    navTabBarController.navTabBarTextFont = [UIFont systemFontOfSize: 20 ];
-    navTabBarController.navTabBarItemSpace = 40;
+    SCNavTabBarController *navTabBarController = [[SCNavTabBarController alloc] initWithSubViewControllers:vcs];
+//    navTabBarController.navTabBarColor = [UIColor colorWithRed:0.5 green:0.5 blue:1 alpha:1];
+//    navTabBarController.navTabBarSelectedTextColor = [UIColor colorWithRed:0.8 green:0.5 blue:0.5 alpha:1];
+//    navTabBarController.navTabBarTextFont = [UIFont systemFontOfSize: 20 ];
+//    navTabBarController.navTabBarItemSpace = 40;
 //    navTabBarController.navTabBarHeight = 50;
-    CGRect rect = [UIScreen mainScreen].bounds;
-    navTabBarController.navTabBarItemWidth = rect.size.width/3;
+//    CGRect rect = [UIScreen mainScreen].bounds;
+//    navTabBarController.navTabBarItemWidth = rect.size.width/3;
+    navTabBarController.canPopAllItemMenu = YES;
+    [navTabBarController addParentController: self];
 }
 
 - (void)didReceiveMemoryWarning {

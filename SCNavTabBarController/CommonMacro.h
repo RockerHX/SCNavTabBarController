@@ -13,8 +13,6 @@
 #pragma mark - **** Common Macro ****
 #pragma mark -
 
-//#import "AppDelegate.h"
-
 #define APP_DELEGATE_INSTANCE                       ((AppDelegate*)([UIApplication sharedApplication].delegate))
 #define USER_DEFAULT                                [NSUserDefaults standardUserDefaults]
 #define MAIN_STORY_BOARD(Name)                      [UIStoryboard storyboardWithName:Name bundle:nil]
@@ -46,7 +44,7 @@
 #define DOT_COORDINATE                  0.0f
 #define STATUS_BAR_HEIGHT               20.0f
 #define BAR_ITEM_WIDTH_HEIGHT           30.0f
-#define NAVIGATION_BAR_HEIGHT           60.0f
+#define NAVIGATION_BAR_HEIGHT           44.0f
 #define TAB_TAB_HEIGHT                  49.0f
 #define TABLE_VIEW_ROW_HEIGHT           NAVIGATION_BAR_HEIGHT
 #define CONTENT_VIEW_HEIGHT_NO_TAB_BAR  (SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT)
@@ -68,7 +66,7 @@
 #define NAV_TAB_BAR_HEIGHT              ARROW_BUTTON_WIDTH
 #define ITEM_HEIGHT                     NAV_TAB_BAR_HEIGHT
 
-#define NavTabbarColor                  UIColorWithRGBA(230.0f, 230.0f, 230.0f, 1.0f)
+#define NavTabbarColor                  UIColorWithRGBA(240.0f, 230.0f, 230.0f, 1.0f)
 #define SCNavTabbarBundleName           @"SCNavTabBar.bundle"
 
 #define SCNavTabbarSourceName(file) [SCNavTabbarBundleName stringByAppendingPathComponent:file]
