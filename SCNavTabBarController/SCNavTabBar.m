@@ -188,6 +188,7 @@
                 {
                     _popView = [[SCPopView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, self.frame.size.height - NAVIGATION_BAR_HEIGHT)];
                     _popView.delegate = self;
+                    _popView.titleFont = _titleFont;
                     _popView.itemNames = _itemTitles;
                     [self addSubview:_popView];
                 }
