@@ -17,11 +17,9 @@
 {
     NSMutableArray *widths = [@[] mutableCopy];
     
-    for (NSString *title in titles)
-    {
-//        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
+    for (NSString *title in titles) {
         CGSize size = [title sizeWithAttributes:
-                       @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+                       @{NSFontAttributeName: _titleFont}];
         CGSize adjustedSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
         NSNumber *width = [NSNumber numberWithFloat:adjustedSize.width + 40.0f];
         [widths addObject:width];
@@ -40,6 +38,7 @@
         button.tag = index;
         button.frame = CGRectMake(buttonX, buttonY, [itemWidths[index] floatValue], ITEM_HEIGHT);
         [button setTitle:_itemNames[index] forState:UIControlStateNormal];
+        button.titleLabel.font = _titleFont;
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
