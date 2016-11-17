@@ -61,8 +61,9 @@
         _arrowButton.image = _arrowImage;
         _arrowButton.userInteractionEnabled = YES;
         [self addSubview:_arrowButton];
-        [self viewShowShadow:_arrowButton shadowRadius:4.0f shadowOpacity:20.0f];
-        
+        _arrowButton.layer.shadowRadius = 4.0f;
+        _arrowButton.layer.shadowOpacity = 20.0f;
+        _arrowButton.layer.shadowOffset = CGSizeMake(0, -5);
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(functionButtonPressed)];
         [_arrowButton addGestureRecognizer:tapGestureRecognizer];
     }
@@ -144,6 +145,7 @@
 {
     view.layer.shadowRadius = shadowRadius;
     view.layer.shadowOpacity = shadowOpacity;
+//    view.layer.shadowOffset = CGSizeMake(-3, 0);
 }
 
 - (CGFloat)popMenuHeight
@@ -179,11 +181,11 @@
     if (pop)
     {
         [self viewShowShadow:_arrowButton shadowRadius:DOT_COORDINATE shadowOpacity:DOT_COORDINATE];
-        [UIView animateWithDuration:0.5f animations:^{
+        [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             _navgationTabBar.hidden = YES;
-            _arrowButton.transform = CGAffineTransformMakeRotation(M_PI);
+            _arrowButton.transform = CGAffineTransformMakeRotation(M_PI/4);
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.2f animations:^{
+            [UIView animateWithDuration:0.1f animations:^{
                 if (!_popView)
                 {
                     _popView = [[SCPopView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, self.frame.size.height - NAVIGATION_BAR_HEIGHT)];
@@ -203,7 +205,9 @@
             _arrowButton.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             _navgationTabBar.hidden = !_navgationTabBar.hidden;
-            [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
+            _arrowButton.layer.shadowRadius = 4.0f;
+            _arrowButton.layer.shadowOpacity = 20.0f;
+            _arrowButton.layer.shadowOffset = CGSizeMake(0, -5);
         }];
     }
 }
