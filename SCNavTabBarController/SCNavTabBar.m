@@ -92,6 +92,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
+        button.titleLabel.font = _titleFont;
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_navgationTabBar addSubview:button];
@@ -130,7 +131,7 @@
     {
 //        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
         CGSize size = [title sizeWithAttributes:
-                       @{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+                       @{NSFontAttributeName: _titleFont}];
         CGSize adjustedSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
         NSNumber *width = [NSNumber numberWithFloat:adjustedSize.width + 40.0f];
         [widths addObject:width];
