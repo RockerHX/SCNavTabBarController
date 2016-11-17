@@ -21,11 +21,11 @@
     
     UIViewController *oneViewController = [[UIViewController alloc] init];
     oneViewController.title = @"新闻";
-    oneViewController.view.backgroundColor = [UIColor whiteColor];
+    oneViewController.view.backgroundColor = [UIColor orangeColor];
     
     UIViewController *twoViewController = [[UIViewController alloc] init];
     twoViewController.title = @"体育";
-    twoViewController.view.backgroundColor = [UIColor whiteColor];
+    twoViewController.view.backgroundColor = [UIColor yellowColor];
     
     UIViewController *threeViewController = [[UIViewController alloc] init];
     threeViewController.title = @"娱乐八卦";
