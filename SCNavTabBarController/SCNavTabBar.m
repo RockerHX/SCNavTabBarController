@@ -145,7 +145,6 @@
 {
     view.layer.shadowRadius = shadowRadius;
     view.layer.shadowOpacity = shadowOpacity;
-//    view.layer.shadowOffset = CGSizeMake(-3, 0);
 }
 
 - (CGFloat)popMenuHeight
