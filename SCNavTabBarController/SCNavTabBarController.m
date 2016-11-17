@@ -184,7 +184,7 @@
     if (pop)
     {
         [UIView animateWithDuration:0.5f animations:^{
-            _navTabBar.frame = CGRectMake(_navTabBar.frame.origin.x, _navTabBar.frame.origin.y, _navTabBar.frame.size.width, height + NAV_TAB_BAR_HEIGHT);
+            _navTabBar.frame = CGRectMake(_navTabBar.frame.origin.x, _navTabBar.frame.origin.y, _navTabBar.frame.size.width, SCREEN_HEIGHT - _navTabBar.frame.origin.y);
         }];
     }
     else
