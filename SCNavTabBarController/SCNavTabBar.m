@@ -61,8 +61,9 @@
         _arrowButton.image = _arrowImage;
         _arrowButton.userInteractionEnabled = YES;
         [self addSubview:_arrowButton];
-        [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
-        
+        _arrowButton.layer.shadowRadius = 4.0f;
+        _arrowButton.layer.shadowOpacity = 20.0f;
+        _arrowButton.layer.shadowOffset = CGSizeMake(0, -5);
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(functionButtonPressed)];
         [_arrowButton addGestureRecognizer:tapGestureRecognizer];
     }
@@ -70,14 +71,17 @@
     _navgationTabBar = [[UIScrollView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, functionButtonX, NAV_TAB_BAR_HEIGHT)];
     _navgationTabBar.showsHorizontalScrollIndicator = NO;
     [self addSubview:_navgationTabBar];
-    
-    [self viewShowShadow:self shadowRadius:10.0f shadowOpacity:10.0f];
+    //隐藏navBar底部阴影
+//    [self viewShowShadow:self shadowRadius:4.0f shadowOpacity:10.0f];
 }
 
 - (void)showLineWithButtonWidth:(CGFloat)width
 {
     _line = [[UIView alloc] initWithFrame:CGRectMake(2.0f, NAV_TAB_BAR_HEIGHT - 3.0f, width - 4.0f, 3.0f)];
-    _line.backgroundColor = UIColorWithRGBA(20.0f, 80.0f, 200.0f, 0.7f);
+    if (self.lineColor == nil) {
+        self.lineColor = [UIColor blueColor];
+    }
+    _line.backgroundColor = self.lineColor;
     [_navgationTabBar addSubview:_line];
 }
 
@@ -89,6 +93,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(buttonX, DOT_COORDINATE, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT);
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
+        button.titleLabel.font = _titleFont;
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(itemPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_navgationTabBar addSubview:button];
@@ -125,8 +130,11 @@
     
     for (NSString *title in titles)
     {
-        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
-        NSNumber *width = [NSNumber numberWithFloat:size.width + 40.0f];
+//        CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
+        CGSize size = [title sizeWithAttributes:
+                       @{NSFontAttributeName: _titleFont}];
+        CGSize adjustedSize = CGSizeMake(ceilf(size.width), ceilf(size.height));
+        NSNumber *width = [NSNumber numberWithFloat:adjustedSize.width + 40.0f];
         [widths addObject:width];
     }
     
@@ -172,15 +180,16 @@
     if (pop)
     {
         [self viewShowShadow:_arrowButton shadowRadius:DOT_COORDINATE shadowOpacity:DOT_COORDINATE];
-        [UIView animateWithDuration:0.5f animations:^{
+        [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             _navgationTabBar.hidden = YES;
-            _arrowButton.transform = CGAffineTransformMakeRotation(M_PI);
+            _arrowButton.transform = CGAffineTransformMakeRotation(M_PI/4);
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.2f animations:^{
+            [UIView animateWithDuration:0.1f animations:^{
                 if (!_popView)
                 {
                     _popView = [[SCPopView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, self.frame.size.height - NAVIGATION_BAR_HEIGHT)];
                     _popView.delegate = self;
+                    _popView.titleFont = _titleFont;
                     _popView.itemNames = _itemTitles;
                     [self addSubview:_popView];
                 }
@@ -195,7 +204,9 @@
             _arrowButton.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             _navgationTabBar.hidden = !_navgationTabBar.hidden;
-            [self viewShowShadow:_arrowButton shadowRadius:20.0f shadowOpacity:20.0f];
+            _arrowButton.layer.shadowRadius = 4.0f;
+            _arrowButton.layer.shadowOpacity = 20.0f;
+            _arrowButton.layer.shadowOffset = CGSizeMake(0, -5);
         }];
     }
 }

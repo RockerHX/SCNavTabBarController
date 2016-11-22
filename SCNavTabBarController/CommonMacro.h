@@ -13,8 +13,6 @@
 #pragma mark - **** Common Macro ****
 #pragma mark -
 
-#import "AppDelegate.h"
-
 #define APP_DELEGATE_INSTANCE                       ((AppDelegate*)([UIApplication sharedApplication].delegate))
 #define USER_DEFAULT                                [NSUserDefaults standardUserDefaults]
 #define MAIN_STORY_BOARD(Name)                      [UIStoryboard storyboardWithName:Name bundle:nil]
