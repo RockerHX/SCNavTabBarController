@@ -19,6 +19,7 @@
 @property (nonatomic, strong)   NSArray     *subViewControllers;        // An array of children view controllers
 
 @property (nonatomic, strong)   UIColor     *navTabBarColor;            // Could not set [UIColor clear], if you set, NavTabbar will show initialize color
+@property (nonatomic, strong)   UIFont      *navTabBarFont;             // tabbar text font
 @property (nonatomic, strong)   UIColor     *navTabBarLineColor;
 @property (nonatomic, strong)   UIImage     *navTabBarArrowImage;
 

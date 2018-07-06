@@ -37,6 +37,7 @@
 
 @property (nonatomic, strong)   UIColor     *lineColor;                 // set the underscore color
 @property (nonatomic, strong)   UIImage     *arrowImage;                // set arrow button's image
+@property (nonatomic, strong)   UIFont      *titleFont;
 
 /**
  *  Initialize Methods
